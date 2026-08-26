@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Selected web, mobile, AI, enterprise, and immersive product work by perpahmian.tech.">
+  <title>Work — perpahmian.tech</title>
+  <link rel="icon" href="image/profile/Logo Icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="projects.js" defer></script><script src="script.js" defer></script>
+</head>
+<body data-page="work">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div data-site-header></div>
+  <main id="main">
+    <header class="page-intro page-shell">
+      <h1>Work, built for use.</h1>
+      <div><p>Eighteen projects across operational systems, mobile products, public platforms, and immersive web experiences.</p><p class="page-intro__note">All metrics and roles shown are drawn from the current project archive.</p></div>
+    </header>
+    <section class="work-index page-shell" aria-labelledby="work-index-title">
+      <h2 class="sr-only" id="work-index-title">Project index</h2>
+      <div class="filters" role="toolbar" aria-label="Filter projects">
+        <button class="filter is-active" type="button" data-filter="all" aria-pressed="true">All work</button>
+        <button class="filter" type="button" data-filter="enterprise" aria-pressed="false">Enterprise</button>
+        <button class="filter" type="button" data-filter="mobile" aria-pressed="false">Mobile</button>
+        <button class="filter" type="button" data-filter="ai" aria-pressed="false">AI</button>
+        <button class="filter" type="button" data-filter="3d" aria-pressed="false">3D / WebGL</button>
+        <button class="filter" type="button" data-filter="web" aria-pressed="false">Web</button>
+      </div>
+      <p class="filter-status" aria-live="polite" data-filter-status></p>
+      <div class="project-grid" data-project-grid></div>
+    </section>
+  </main>
+  <div data-site-footer></div>
+</body>
+</html>
