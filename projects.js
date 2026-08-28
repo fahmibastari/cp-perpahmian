@@ -102,8 +102,8 @@ const PROJECTS = [
     role: "Full-stack developer",
     type: "Client work",
     timeline: "10 weeks",
-    summary: "An Indonesian phone-specification portal with comparison, automated content ingestion, SEO, and custom CMS tooling.",
-    description: "Built with Leaf MVC and Eloquent ORM, the platform combines device search, side-by-side comparison, automated GSMArena scraping, advertising controls, sitemaps, and structured SEO metadata.",
+    summary: "An Indonesian phone-specification portal with structured discovery, comparison, SEO, and custom CMS tooling.",
+    description: "Built with Leaf MVC and Eloquent ORM, the platform combines device search, side-by-side comparison, structured content ingestion, advertising controls, sitemaps, and technical SEO metadata.",
     cover: "image/spekhp/Main.png",
     url: "https://perpahmian-dev.lovestoblog.com/",
     tech: ["Leaf MVC", "PHP", "Alpine.js", "MySQL", "Eloquent ORM", "Vite"],
@@ -150,8 +150,8 @@ const PROJECTS = [
     role: "Front-end developer",
     type: "Client work",
     timeline: "1 month",
-    summary: "An executive dashboard that translates complex care data into clear operational views.",
-    description: "The product combines service discovery, psychologist directories, and data-heavy executive reporting in a responsive Next.js interface.",
+    summary: "A psychology and counselling platform connecting service discovery, registration, and psychologist selection.",
+    description: "The responsive platform brings together counselling information, service discovery, registration flows, psychologist profiles, and operational views for the care team.",
     cover: "image/mentalhealing/Dashboard.png",
     url: "https://mentalhealing.id/home",
     tech: ["Next.js", "TypeScript", "Supabase", "Tailwind CSS", "Chart.js"],
@@ -283,7 +283,200 @@ const PROJECTS = [
   }
 ];
 
-const FEATURED_PROJECT_IDS = ["sicater", "magicpin", "worldofbooth", "flamboys"];
+const PROJECT_DETAILS = {
+  sicater: {
+    kind: "Client work",
+    workstream: "Operational systems",
+    context: "A connected product ecosystem used within the operations of a regional water utility (PDAM/BUMD).",
+    challenge: "Field meter work, validation, route activity, and management reporting needed to operate as one dependable workflow—even across uneven connectivity and different device capabilities.",
+    response: "We connected an offline-first mobile application with administrative and management platforms, adding OCR-assisted capture, NFC and QR validation, route visibility, audit history, and operational reporting.",
+    outcome: "A production-oriented system that gives field officers, administrators, and management a shared operational picture without forcing every role into the same interface.",
+    proof: "Used in a regional water utility operating environment.",
+    status: "Operational deployment"
+  },
+  magicpin: {
+    kind: "Client work",
+    workstream: "Digital platforms",
+    context: "A production product for an overseas client serving the global Disney pin-collecting community.",
+    challenge: "Collectors needed one coherent experience for discovering pins, organizing collections, navigating park maps, trading, messaging, and identifying items from mobile devices.",
+    response: "The engagement connected native-feeling mobile workflows, a web platform, real-time messaging, geographic map tiles, subscriptions, and AI-assisted image processing.",
+    outcome: "A multi-platform product released for public use on iOS and Android, supported by a connected web ecosystem.",
+    proof: "Live production product available through the App Store and Google Play.",
+    status: "Live product"
+  },
+  worldofbooth: {
+    kind: "Independent R&D",
+    workstream: "Immersive experiences",
+    context: "An independent product experiment exploring how a photobooth can become a place visitors move through rather than a single utility screen.",
+    challenge: "The experience needed to combine real-time 3D exploration, vehicle and character control, webcam capture, and a private local photo library inside the browser.",
+    response: "A compact 3D city, multiple themed booths, accelerated collision detection, custom cameras, and local-first image storage were designed as one continuous journey.",
+    outcome: "A playable browser experience that demonstrates production-minded interaction design without accounts or mandatory cloud uploads.",
+    proof: "Publicly accessible interactive prototype.",
+    status: "Independent release"
+  },
+  flamboys: {
+    kind: "Client work",
+    workstream: "Operational systems",
+    context: "An internal product built to support the day-to-day operation of a coffee roasting business.",
+    challenge: "Roasting activity, inventory, production history, and equipment records needed to move from fragmented handling into a traceable operational flow.",
+    response: "We paired a focused mobile workflow for recording roasting sessions with an administrative system for inventory, production records, roaster management, and analysis.",
+    outcome: "A purpose-built operational tool shaped around the work of the roasting team rather than a generic inventory template.",
+    proof: "Built for use inside an active coffee roasting operation.",
+    status: "Internal product"
+  },
+  ubmstorage: {
+    kind: "Client work",
+    workstream: "Immersive experiences",
+    context: "A client product catalogue reimagined as an interactive browser-based object.",
+    challenge: "The catalogue needed to feel distinctive and memorable while still allowing visitors to browse products without learning a complicated interaction model.",
+    response: "We used a playable retro-handheld metaphor, spatial UI, custom shaders, a music layer, and a clear catalogue flow built with React Three Fiber.",
+    outcome: "A branded product showcase that uses 3D interaction as a functional part of discovery rather than visual decoration.",
+    proof: "Commissioned immersive catalogue delivered as client work.",
+    status: "Client delivery"
+  },
+  digivass: {
+    kind: "Client work",
+    workstream: "Operational systems",
+    context: "A field data collection platform for teams operating across multiple locations in Lampung province.",
+    challenge: "Distributed teams needed a consistent way to submit location-aware records while coordinators needed clearer validation, assignment, and oversight from the office.",
+    response: "We connected mobile-first survey capture, geolocation checks, team management, structured review, and administrative analytics in one operational system.",
+    outcome: "A field operations tool capable of coordinating distributed data collection and organizing submissions across Lampung province.",
+    proof: "Deployed to support field data collection across Lampung province.",
+    status: "Operational deployment"
+  },
+  spekhp: {
+    kind: "Client work",
+    workstream: "Digital platforms",
+    context: "An Indonesian client platform for finding, understanding, and comparing mobile-phone specifications.",
+    challenge: "A large and changing device catalogue needed to remain searchable, comparable, manageable by editors, and discoverable through search engines.",
+    response: "We created structured device pages, comparison tools, brand and search journeys, content ingestion workflows, advertising controls, and a custom administration area.",
+    outcome: "A focused specification platform with both a consumer-facing discovery experience and the editorial tooling needed to operate it.",
+    proof: "Commissioned platform with a dedicated content-management workflow.",
+    status: "Client delivery"
+  },
+  justspeak: {
+    kind: "Client work",
+    workstream: "Digital platforms",
+    context: "A company and learning platform for JustSpeak, an English-language institution.",
+    challenge: "The institution needed its services, activities, blog, learning resources, and assessments to live in one manageable system, including quizzes with multiple question types and scoring rules.",
+    response: "We combined a public company profile and content platform with resource publishing, quiz delivery, assessment workflows, scoring logic, and administrative analysis.",
+    outcome: "A unified institutional platform that supports both public communication and the more complex mechanics of language assessment.",
+    proof: "Live platform used by an operating language institution.",
+    status: "Live platform"
+  },
+  duzz: {
+    kind: "Independent R&D",
+    workstream: "Digital products",
+    context: "An independent exploration of tactile analog-camera behaviour inside a mobile-first web application.",
+    challenge: "The product needed to make original visual recipes feel immediate while keeping captured photos private and useful without a mandatory account.",
+    response: "A custom Canvas pipeline applies exposure, grain, halation, dust, date stamps, and light leaks, while IndexedDB manages a local photo library.",
+    outcome: "A polished installable camera experiment with eighteen original recipes and a privacy-first storage model.",
+    proof: "Publicly accessible independent product.",
+    status: "Independent release"
+  },
+  mental: {
+    kind: "Client work",
+    workstream: "Digital platforms",
+    context: "A company and service platform for a psychology and counselling provider.",
+    challenge: "People needed a calmer path from understanding the available services to registering and selecting a suitable psychologist, while the organization needed clear operational views.",
+    response: "We brought service discovery, psychologist profiles, registration journeys, and responsive operational interfaces into a coherent product surface.",
+    outcome: "A clearer digital front door for counselling services, supported by practical selection and registration flows.",
+    proof: "Live client platform for psychology and counselling services.",
+    status: "Live platform"
+  },
+  "2watuju": {
+    kind: "Client work",
+    workstream: "Immersive experiences",
+    context: "A company profile and project showcase for an interior and architectural design practice.",
+    challenge: "Conventional project thumbnails could not fully communicate the spatial quality of completed homes and interiors.",
+    response: "We combined a fast portfolio and catalogue with project detail pages and Panolens-powered 360° walkthroughs for spatial exploration.",
+    outcome: "A discoverable company profile that lets prospective clients inspect selected environments beyond static imagery.",
+    proof: "Live company profile with interactive 360° project views.",
+    status: "Live platform"
+  },
+  examlent: {
+    kind: "Independent R&D",
+    workstream: "Digital products",
+    context: "An independent product exploring the full operational workflow behind online examinations.",
+    challenge: "Mixed question types, reading passages, token-based access, scoring, attempt review, and reporting needed to remain understandable for both students and administrators.",
+    response: "We designed connected student and administrator journeys covering package creation, assessment delivery, grading, review, and CSV reporting.",
+    outcome: "A complete assessment-system prototype that demonstrates deeper workflow and data-model thinking beyond a simple quiz interface.",
+    proof: "Functional independent assessment product.",
+    status: "Independent product"
+  },
+  cced: {
+    kind: "Client work",
+    workstream: "Digital platforms",
+    context: "A role-based employment platform for the career-development unit at Universitas Lampung.",
+    challenge: "Students and fresh graduates needed a trustworthy place to find opportunities while employers and university administrators required separate publishing and review workflows.",
+    response: "We created tailored journeys for candidates, employers, and administrators, including profiles, vacancy publishing, applications, and operational review.",
+    outcome: "A university-connected hiring platform designed to help Universitas Lampung students and graduates access employment opportunities.",
+    proof: "Built for an academic service unit at Universitas Lampung.",
+    status: "Institutional platform"
+  },
+  gamestation: {
+    kind: "Independent R&D",
+    workstream: "Digital products",
+    context: "An independent collection exploring browser-native game mechanics without a game engine.",
+    challenge: "Ten different games needed to share a coherent platform while handling animation, sound, input, state, and distinct gameplay rules using browser APIs.",
+    response: "We built the collection with JavaScript, Canvas, Web Audio, and Tone.js, creating reusable platform patterns around varied arcade, rhythm, puzzle, and action mechanics.",
+    outcome: "A compact playable game station demonstrating interaction engineering across multiple genres.",
+    proof: "Publicly accessible independent game collection.",
+    status: "Independent release"
+  },
+  navaraprofile: {
+    kind: "Client work",
+    workstream: "Company platforms",
+    context: "A company profile and managed project showcase for Navara City Park.",
+    challenge: "The organization needed consistent public presentation without requiring developers for routine content updates.",
+    response: "We paired responsive public pages with a Supabase-backed content workflow and previews for major editable sections.",
+    outcome: "A maintainable company platform that gives the internal team direct control over its published content.",
+    proof: "Commissioned company profile with custom content management.",
+    status: "Client delivery"
+  },
+  navaraopening: {
+    kind: "Client work",
+    workstream: "Company platforms",
+    context: "A personalized digital invitation and RSVP tool for a company opening event.",
+    challenge: "Guest information, individual links, access, and attendance responses needed to remain coordinated during event preparation.",
+    response: "We connected spreadsheet-based guest records with personalized invitation links, QR access, and live response tracking.",
+    outcome: "A focused event tool that reduced manual coordination around invitation distribution and RSVP monitoring.",
+    proof: "Delivered for a real company opening event.",
+    status: "Event delivery"
+  },
+  freelance: {
+    kind: "Independent R&D",
+    workstream: "Digital products",
+    context: "An independent utility built around the recurring administrative work of freelancers.",
+    challenge: "Client activity, sessions, fees, currencies, time zones, and payment status were easy to lose across unrelated tools.",
+    response: "A local-first application centralizes weekly work records, billing context, payment state, and timezone conversion without requiring a hosted account.",
+    outcome: "A compact productivity product shaped around a real independent-work workflow.",
+    proof: "Functional local-first product experiment.",
+    status: "Independent product"
+  },
+  wakaf: {
+    kind: "Client work",
+    workstream: "Company platforms",
+    context: "A focused public-information page commissioned by BPN Sukoharjo for its waqf land service.",
+    challenge: "Requirements, supporting documents, maps, and service guidance needed to be easier for the public to find and understand in one place.",
+    response: "We organized the service into accessible information flows with expandable references, interactive maps, and connected document resources.",
+    outcome: "A single-purpose civic page that makes a specialized public service more legible and accessible.",
+    proof: "Commissioned for BPN Sukoharjo.",
+    status: "Public service delivery"
+  }
+};
+
+PROJECTS.forEach((project) => {
+  Object.assign(project, PROJECT_DETAILS[project.id]);
+  project.filters = [...new Set([
+    ...project.filters,
+    project.kind === "Client work" ? "client" : "rd",
+    project.workstream === "Operational systems" ? "operations" : "platforms",
+    project.workstream === "Immersive experiences" ? "immersive" : ""
+  ].filter(Boolean))];
+});
+
+const FEATURED_PROJECT_IDS = ["sicater", "magicpin", "digivass", "flamboys", "cced", "ubmstorage"];
 
 function getProject(id) {
   return PROJECTS.find((project) => project.id === id);

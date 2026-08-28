@@ -4,11 +4,17 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="description" content="Start a project conversation with perpahmian.tech.">
+  <meta name="theme-color" content="#f5f8f2"><meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://cp-perpahmian.vercel.app/contact.html">
+  <meta property="og:type" content="website"><meta property="og:site_name" content="perpahmian.tech">
+  <meta property="og:title" content="Contact — perpahmian.tech"><meta property="og:description" content="Start a product engineering conversation with perpahmian.tech.">
+  <meta property="og:url" content="https://cp-perpahmian.vercel.app/contact.html"><meta property="og:image" content="https://cp-perpahmian.vercel.app/image/profile/Logo%20Icon%20Text%20Horizontal.png"><meta name="twitter:card" content="summary_large_image">
   <title>Contact — perpahmian.tech</title>
   <link rel="icon" href="image/profile/Logo Icon.png">
+  <link rel="apple-touch-icon" href="image/profile/Logo Icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css"><script src="script.js" defer></script>
+  <link rel="stylesheet" href="styles.css?v=20260829a"><script src="script.js?v=20260829a" defer></script>
 </head>
 <body data-page="contact">
   <a class="skip-link" href="#main">Skip to content</a><div data-site-header></div>
@@ -19,14 +25,18 @@
         <h1>Tell us what needs to work.</h1>
         <p>Share the problem, the people it affects, and what a useful outcome looks like. A polished brief is not required.</p>
         <div class="direct-contact">
-          <a href="mailto:perpahmian.tech@gmail.com">perpahmian.tech@gmail.com <span aria-hidden="true">↗</span></a>
-          <a href="https://www.linkedin.com/company/perpahmian-tech/" target="_blank" rel="noreferrer">LinkedIn company <span aria-hidden="true">↗</span></a>
-          <a href="https://wa.me/6281271662745" target="_blank" rel="noreferrer">WhatsApp <span aria-hidden="true">↗</span></a>
+          <a href="mailto:perpahmian.tech@gmail.com">perpahmian.tech@gmail.com <svg class="ui-arrow" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4 12 12 4M6 4h6v6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a href="https://www.linkedin.com/company/perpahmian-tech/" target="_blank" rel="noreferrer">LinkedIn company <svg class="ui-arrow" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4 12 12 4M6 4h6v6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a href="https://wa.me/6281271662745" target="_blank" rel="noreferrer">WhatsApp <svg class="ui-arrow" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4 12 12 4M6 4h6v6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           <p>Indonesia · Remote collaboration</p>
         </div>
       </div>
 
-      <form class="contact-form" data-contact-form novalidate>
+      <form class="contact-form" data-contact-form action="/api/contact" method="post" novalidate>
+        <div class="form-trap" aria-hidden="true">
+          <label for="website">Leave this field empty</label>
+          <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
+        </div>
         <div class="field">
           <label for="name">Your name <span aria-hidden="true">*</span></label>
           <input id="name" name="name" type="text" autocomplete="name" aria-required="true" aria-describedby="name-help">
@@ -47,8 +57,8 @@
           <textarea id="brief" name="brief" rows="6" aria-required="true" aria-describedby="brief-help"></textarea>
           <p class="field__help" id="brief-help">A few sentences about the problem and desired outcome.</p>
         </div>
-        <button class="button button--ink form-submit" type="submit"><span>Prepare email</span><span aria-hidden="true">→</span></button>
-        <p class="form-note">This form prepares an email in your default mail app. It does not send data to a server.</p>
+        <button class="button button--ink form-submit" type="submit"><span>Send project enquiry</span><svg class="ui-arrow" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <p class="form-note" data-form-status aria-live="polite">Your message is sent securely to perpahmian.tech. We usually continue the conversation by email.</p>
       </form>
     </section>
   </main>

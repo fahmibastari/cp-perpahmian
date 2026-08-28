@@ -1,3 +1,7 @@
+const ICON_ARROW_UP_RIGHT = `<svg class="ui-arrow" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4 12 12 4M6 4h6v6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const ICON_ARROW_RIGHT = `<svg class="ui-arrow" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const ICON_ARROW_LEFT = `<svg class="ui-arrow" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M13 8H3M7 4 3 8l4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
 const SITE_LINKS = [
   ["home", "Home", "index.html"],
   ["work", "Work", "work.html"],
@@ -30,7 +34,7 @@ function headerMarkup(currentPage) {
         <nav class="site-menu__nav" aria-label="Main navigation">${navLinks}</nav>
         <div class="site-menu__bottom">
           <span>Build What Matters.</span>
-          <a href="mailto:perpahmian.tech@gmail.com">Email us ↗</a>
+          <a href="mailto:perpahmian.tech@gmail.com">Email us ${ICON_ARROW_UP_RIGHT}</a>
         </div>
       </div>
     </header>`;
@@ -41,13 +45,14 @@ function footerMarkup() {
     <footer class="site-footer">
       <div class="site-footer__inner">
         <p class="site-footer__statement">Have a difficult product problem? <span>Let’s make it workable.</span></p>
-        <a class="text-link site-footer__action" href="contact.html">Start a conversation <span aria-hidden="true">→</span></a>
+        <a class="text-link site-footer__action" href="contact.html">Start a conversation ${ICON_ARROW_RIGHT}</a>
         <div class="site-footer__meta">
           <span>© 2026 perpahmian.tech · Indonesia</span>
           <div class="site-footer__links">
-            <a href="https://www.linkedin.com/company/perpahmian-tech/" target="_blank" rel="noreferrer">LinkedIn ↗</a>
-            <a href="https://github.com/fahmibastari" target="_blank" rel="noreferrer">GitHub ↗</a>
-            <a href="mailto:perpahmian.tech@gmail.com">Email ↗</a>
+            <a href="https://www.linkedin.com/company/perpahmian-tech/" target="_blank" rel="noreferrer">LinkedIn ${ICON_ARROW_UP_RIGHT}</a>
+            <a href="https://github.com/fahmibastari" target="_blank" rel="noreferrer">GitHub ${ICON_ARROW_UP_RIGHT}</a>
+            <a href="mailto:perpahmian.tech@gmail.com">Email ${ICON_ARROW_UP_RIGHT}</a>
+            <a href="privacy.html">Privacy</a>
           </div>
         </div>
       </div>
@@ -133,10 +138,10 @@ function projectCard(project, featured = false) {
           <img src="${project.cover}" width="1600" height="1200" loading="lazy" alt="${project.name} product interface">
         </a>
         <div class="feature-project__body">
-          <p class="feature-project__meta">${project.year} · ${project.category}</p>
+          <p class="feature-project__meta"><span>${project.kind}</span> · ${project.year} · ${project.category}</p>
           <h3>${project.name}</h3>
           <p>${project.summary}</p>
-          <a class="text-link" href="project.html?id=${project.id}">View case study <span aria-hidden="true">→</span></a>
+          <a class="text-link" href="project.html?id=${project.id}">View case study ${ICON_ARROW_RIGHT}</a>
         </div>
       </article>`;
   }
@@ -149,10 +154,11 @@ function projectCard(project, featured = false) {
         </div>
         <div class="project-card__body">
           <div>
-            <p class="project-card__meta">${project.year} · ${project.category}</p>
+            <p class="project-card__meta"><span>${project.kind}</span> · ${project.year}</p>
             <h3>${project.name}</h3>
           </div>
-          <span class="project-card__arrow" aria-hidden="true">↗</span>
+          <span class="project-card__arrow" aria-hidden="true">${ICON_ARROW_UP_RIGHT}</span>
+          <p class="project-card__workstream">${project.workstream}</p>
           <p>${project.summary}</p>
         </div>
       </a>
@@ -170,7 +176,7 @@ function setupHeroShowcase() {
   const link = document.querySelector("[data-hero-showcase]");
   if (!link || typeof PROJECTS === "undefined") return;
 
-  const showcaseIds = ["worldofbooth", "flamboys", "digivass", "navaraprofile"];
+  const showcaseIds = ["sicater", "magicpin", "digivass", "ubmstorage"];
   const showcase = showcaseIds.map(getProject).filter(Boolean);
   if (!showcase.length) return;
 
@@ -242,7 +248,24 @@ function renderProjectGrid() {
   const status = document.querySelector("[data-filter-status]");
   if (!grid || typeof PROJECTS === "undefined") return;
 
-  grid.innerHTML = PROJECTS.map((project) => projectCard(project)).join("");
+  const clientProjects = PROJECTS.filter((project) => project.kind === "Client work");
+  const researchProjects = PROJECTS.filter((project) => project.kind === "Independent R&D");
+
+  grid.innerHTML = `
+    <section class="work-group" data-work-group="client" aria-labelledby="client-work-title">
+      <header class="work-group__heading">
+        <div><p>Commissioned products</p><h2 id="client-work-title">Client work</h2></div>
+        <span>${clientProjects.length} projects</span>
+      </header>
+      <div class="project-grid__inner">${clientProjects.map((project) => projectCard(project)).join("")}</div>
+    </section>
+    <section class="work-group" data-work-group="rd" aria-labelledby="research-title">
+      <header class="work-group__heading">
+        <div><p>Self-initiated exploration</p><h2 id="research-title">Independent R&D</h2></div>
+        <span>${researchProjects.length} projects</span>
+      </header>
+      <div class="project-grid__inner">${researchProjects.map((project) => projectCard(project)).join("")}</div>
+    </section>`;
   if (status) status.textContent = `${PROJECTS.length} projects shown`;
 
   const buttons = [...document.querySelectorAll("[data-filter]")];
@@ -264,6 +287,11 @@ function renderProjectGrid() {
         if (matches) visible += 1;
       });
 
+      grid.querySelectorAll("[data-work-group]").forEach((group) => {
+        const hasVisibleCards = [...group.querySelectorAll(".project-card")].some((card) => !card.classList.contains("is-hidden"));
+        group.classList.toggle("is-hidden", !hasVisibleCards);
+      });
+
       if (status) status.textContent = `${visible} ${visible === 1 ? "project" : "projects"} shown`;
     });
   });
@@ -281,30 +309,62 @@ function renderProjectDetail() {
       <section class="not-found page-shell">
         <h1>Project not found.</h1>
         <p>The requested case study is not in the current archive.</p>
-        <a class="button button--ink" href="work.html">Return to work <span aria-hidden="true">→</span></a>
+        <a class="button button--ink" href="work.html">Return to work ${ICON_ARROW_RIGHT}</a>
       </section>`;
     document.title = "Project not found — perpahmian.tech";
     return;
   }
 
   document.title = `${project.name} — perpahmian.tech`;
+  const descriptionMeta = document.querySelector('meta[name="description"]');
+  if (descriptionMeta) descriptionMeta.content = project.summary;
+  const canonical = document.querySelector('link[rel="canonical"]');
+  const projectUrl = `https://cp-perpahmian.vercel.app/project.html?id=${project.id}`;
+  const projectImage = new URL(project.cover, "https://cp-perpahmian.vercel.app/").href;
+  if (canonical) canonical.href = projectUrl;
+  const socialMeta = {
+    'meta[property="og:title"]': `${project.name} — perpahmian.tech`,
+    'meta[property="og:description"]': project.summary,
+    'meta[property="og:url"]': projectUrl,
+    'meta[property="og:image"]': projectImage
+  };
+  Object.entries(socialMeta).forEach(([selector, content]) => {
+    const element = document.querySelector(selector);
+    if (element) element.content = content;
+  });
+
+  const caseSchema = document.createElement("script");
+  caseSchema.type = "application/ld+json";
+  caseSchema.textContent = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    name: project.name,
+    description: project.summary,
+    url: projectUrl,
+    image: projectImage,
+    creator: { "@type": "Organization", name: "perpahmian.tech" }
+  });
+  document.head.append(caseSchema);
   const projectIndex = PROJECTS.findIndex((item) => item.id === project.id);
   const next = PROJECTS[(projectIndex + 1) % PROJECTS.length];
   const externalLink = project.url
-    ? `<a class="button button--ink" href="${project.url}" target="_blank" rel="noreferrer">Visit live project <span aria-hidden="true">↗</span></a>`
+    ? `<a class="button button--ink" href="${project.url}" target="_blank" rel="noreferrer">Visit live project ${ICON_ARROW_UP_RIGHT}</a>`
     : "";
 
-  const gallery = project.images.map((image, index) => `
+  const gallery = project.images.map((image, index) => {
+    const filename = decodeURIComponent(image.split("/").pop()).replace(/\.[^.]+$/, "").replace(/[-_]+/g, " ").replace(/\s+/g, " ").trim();
+    return `
     <figure>
       <img src="${image}" width="1600" height="1200" loading="lazy" alt="${project.name} interface view ${index + 1}">
-      <figcaption>View ${String(index + 1).padStart(2, "0")} · ${project.name}</figcaption>
-    </figure>`).join("");
+      <figcaption>View ${String(index + 1).padStart(2, "0")} · ${filename}</figcaption>
+    </figure>`;
+  }).join("");
 
   target.innerHTML = `
     <section class="case-hero page-shell">
       <div class="case-hero__copy reveal" style="--i: 0">
-        <a class="case-back" href="work.html">← Back to work</a>
-        <p class="project-meta">${project.year} · ${project.category}</p>
+        <a class="case-back" href="work.html">${ICON_ARROW_LEFT} Back to work</a>
+        <p class="project-meta">${project.kind} · ${project.workstream}</p>
         <h1>${project.name}</h1>
         <p class="case-hero__summary">${project.summary}</p>
         ${externalLink}
@@ -316,22 +376,31 @@ function renderProjectDetail() {
     <section class="case-facts page-shell" aria-label="Project facts">
       <dl>
         <div><dt>Role</dt><dd>${project.role}</dd></div>
-        <div><dt>Engagement</dt><dd>${project.type}</dd></div>
+        <div><dt>Engagement</dt><dd>${project.kind}</dd></div>
         <div><dt>Timeline</dt><dd>${project.timeline}</dd></div>
-        <div><dt>Year</dt><dd>${project.year}</dd></div>
+        <div><dt>Status</dt><dd>${project.status}</dd></div>
       </dl>
     </section>
     <section class="case-story page-shell">
-      <h2>The build</h2>
-      <div class="case-story__body">
-        <p>${project.description}</p>
-        <ul class="tech-list" aria-label="Technology used">${project.tech.map((tech) => `<li>${tech}</li>`).join("")}</ul>
+      <div class="case-story__intro">
+        <p class="eyebrow">Case study</p>
+        <h2>From operating context to working product.</h2>
       </div>
+      <div class="case-story__body case-narrative">
+        <article><span>01</span><h3>Context</h3><p>${project.context || project.summary}</p></article>
+        <article><span>02</span><h3>Challenge</h3><p>${project.challenge || project.summary}</p></article>
+        <article><span>03</span><h3>Response</h3><p>${project.response || project.description}</p></article>
+        <article><span>04</span><h3>Shipped outcome</h3><p>${project.outcome || project.description}</p></article>
+      </div>
+    </section>
+    <section class="case-evidence page-shell" aria-label="Project evidence and technology">
+      <div><span>Delivery evidence</span><strong>${project.proof}</strong></div>
+      <div><span>Technology</span><ul class="tech-list" aria-label="Technology used">${project.tech.map((tech) => `<li>${tech}</li>`).join("")}</ul></div>
     </section>
     <section class="project-gallery page-shell" aria-label="Project gallery">${gallery}</section>
     <section class="next-project page-shell">
       <span>Next project</span>
-      <a href="project.html?id=${next.id}"><span class="next-project__name">${next.name}</span><b aria-hidden="true">→</b></a>
+      <a href="project.html?id=${next.id}"><span class="next-project__name">${next.name}</span>${ICON_ARROW_RIGHT}</a>
     </section>`;
 }
 
@@ -340,6 +409,8 @@ function setupContactForm() {
   if (!form) return;
 
   const submit = form.querySelector("button[type='submit']");
+  const status = form.querySelector("[data-form-status]");
+  const defaultStatus = status?.textContent || "";
   const requiredFields = [...form.querySelectorAll("[aria-required='true']")];
 
   function validateField(field) {
@@ -350,7 +421,7 @@ function setupContactForm() {
     let error = "";
 
     if (!field.value.trim()) {
-      error = `${field.labels[0].textContent.replace("*", "").trim()} is missing. Add it before preparing the email.`;
+      error = `${field.labels[0].textContent.replace("*", "").trim()} is missing. Add it before sending the enquiry.`;
     } else if (field.type === "email" && !/^\S+@\S+\.\S+$/.test(field.value.trim())) {
       error = "That email address is incomplete. Use a format like name@company.com.";
     }
@@ -373,7 +444,7 @@ function setupContactForm() {
     });
   });
 
-  form.addEventListener("submit", (event) => {
+  form.addEventListener("submit", async (event) => {
     event.preventDefault();
     const valid = requiredFields.map((field) => {
       field.dataset.touched = "true";
@@ -388,25 +459,38 @@ function setupContactForm() {
       return;
     }
 
-    const data = new FormData(form);
-    const subject = `Project enquiry from ${data.get("name")}`;
-    const body = [
-      `Name: ${data.get("name")}`,
-      `Email: ${data.get("email")}`,
-      `Company: ${data.get("company") || "Not provided"}`,
-      "",
-      "Project context:",
-      data.get("brief")
-    ].join("\n");
-
     submit.dataset.state = "loading";
-    submit.querySelector("span:first-child").textContent = "Opening mail app";
-    window.location.href = `mailto:perpahmian.tech@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    submit.disabled = true;
+    submit.querySelector("span:first-child").textContent = "Sending enquiry";
+    if (status) status.textContent = "Sending your message securely…";
 
-    window.setTimeout(() => {
+    try {
+      const response = await fetch(form.action, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify(Object.fromEntries(new FormData(form)))
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(result.error || "The message could not be sent.");
+
       submit.dataset.state = "success";
-      submit.querySelector("span:first-child").textContent = "Email prepared";
-    }, 500);
+      submit.querySelector("span:first-child").textContent = "Enquiry sent";
+      if (status) status.textContent = "Thank you. Your enquiry has reached perpahmian.tech and we will reply by email.";
+      form.reset();
+      form.querySelectorAll(".field").forEach((field) => delete field.dataset.state);
+    } catch (error) {
+      submit.dataset.state = "error";
+      submit.querySelector("span:first-child").textContent = "Try sending again";
+      if (status) status.innerHTML = `${error.message} You can also email <a href="mailto:perpahmian.tech@gmail.com">perpahmian.tech@gmail.com</a>.`;
+    } finally {
+      submit.disabled = false;
+      window.setTimeout(() => {
+        if (submit.dataset.state !== "success") {
+          submit.querySelector("span:first-child").textContent = "Send project enquiry";
+          if (status && submit.dataset.state !== "error") status.textContent = defaultStatus;
+        }
+      }, 5000);
+    }
   });
 }
 

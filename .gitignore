@@ -1,2 +1,5 @@
 .hallmark
 hallmark-main
+.env
+.env.local
+.vercel
