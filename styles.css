@@ -1746,25 +1746,29 @@ ol {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: var(--space-2xl);
-  align-items: center;
+  align-items: start;
   border-block-start: var(--rule-hair) solid var(--color-rule);
 }
 
-.founder-profile__portrait {
+.founder-profile__identity {
   display: grid;
-  place-items: end center;
-  min-width: 0;
-  aspect-ratio: 4 / 5;
-  overflow: hidden;
-  border-radius: var(--radius-lg);
-  background: var(--color-accent);
+  gap: var(--space-md);
+  align-content: start;
 }
 
-.founder-profile__portrait img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: center bottom;
+.founder-profile__identity h2 {
+  max-width: 9ch;
+  font-size: var(--text-display-s);
+}
+
+.founder-profile__role {
+  max-width: 18ch;
+  color: var(--color-accent-dark);
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
 }
 
 .founder-profile__copy {
@@ -1773,15 +1777,7 @@ ol {
   align-content: center;
 }
 
-.founder-profile__copy h2 {
-  font-size: clamp(var(--text-2xl), 5vw, var(--text-4xl));
-}
-
-.founder-profile__copy h2 span {
-  color: var(--color-accent-dark);
-}
-
-.founder-profile__copy > p:not(.eyebrow) {
+.founder-profile__copy > p {
   color: var(--color-muted);
   font-size: var(--text-md);
 }
@@ -1960,10 +1956,6 @@ ol {
   .founder-profile {
     grid-template-columns: minmax(20rem, 0.8fr) minmax(0, 1.2fr);
     gap: var(--space-4xl);
-  }
-
-  .founder-profile__portrait {
-    max-width: 34rem;
   }
 
   .case-story__intro {
