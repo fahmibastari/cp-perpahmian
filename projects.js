@@ -10,7 +10,7 @@ const PROJECTS = [
     timeline: "Ongoing",
     summary: "A three-tier utility management ecosystem connecting field meter operations with executive oversight.",
     description: "SiCater brings offline-first mobile inspections, AI-assisted OCR, NFC validation, route tracking, revenue estimation, abnormal-consumption analysis, and operational reporting into one connected system for water utilities.",
-    cover: "image/sicater/Thumbnail-Sicater.png",
+    cover: "image/sicater/Sicater Thumb Black.png",
     tech: ["NestJS", "React Native", "Expo", "TypeORM", "MySQL", "AI OCR", "NFC"],
     images: ["image/sicater/Thumbnail-Sicater.png", "image/sicater/Web-Dashboard.png", "image/sicater/Web-Revenue.png", "image/sicater/Web-MeterMap.png", "image/sicater/Mobile-DashboardStats.jpg", "image/sicater/Mobile-ScanNFC.jpg"]
   },
@@ -25,7 +25,7 @@ const PROJECTS = [
     timeline: "6 months",
     summary: "A multi-platform ecosystem for Disney pin collectors with AI-assisted scanning, maps, trading, and messaging.",
     description: "The product spans Android and iOS, a web dashboard, real-time messaging, subscription workflows, AI segmentation with PyTorch, and custom park maps rendered from high-resolution geographic tiles.",
-    cover: "image/magicpin/Thumbnail.jpg",
+    cover: "image/magicpin/MP Thumb Black.png",
     url: "https://www.magicpinapp.com/",
     tech: ["NestJS", "React Native", "Python", "PyTorch", "Socket.io", "PostgreSQL", "Leaflet"],
     images: ["image/magicpin/Thumbnail.jpg", "image/magicpin/Mobile - FullMapTiles.png", "image/magicpin/DashboardGuest3.png", "image/magicpin/Web - Marketplace.png", "image/magicpin/Web - Map Tiles - List Map.png", "image/magicpin/Mobile - Pin Detail.png"]
@@ -57,7 +57,7 @@ const PROJECTS = [
     timeline: "3 months",
     summary: "A connected operations system for coffee production, from roasting logs to live inventory intelligence.",
     description: "The mobile workflow captures precise roasting activity while the administrative platform centralizes inventory, production records, roaster management, and analysis.",
-    cover: "image/flamboys/Mobile - HomeMenu.png",
+    cover: "image/flamboys/Flambo Thumb Black.png",
     url: "https://drive.google.com/file/d/1aQOnqPLuiHevr6noDFuJ0I9fySmNS4ZF/view?usp=sharing",
     tech: ["React Native", "Supabase", "Laravel", "Vue.js", "PostgreSQL", "Firebase"],
     images: ["image/flamboys/Mobile - HomeMenu.png", "image/flamboys/Mobile - RoastingSession.png", "image/flamboys/Admin - DashboardAnalytics.png", "image/flamboys/Admin - InventoryList.png", "image/flamboys/Admin - LogRORDetails.png", "image/flamboys/Admin - RoasterManagement.png"]
@@ -73,7 +73,7 @@ const PROJECTS = [
     timeline: "6 weeks",
     summary: "An interactive virtual store expressed through a playable retro-handheld interface in the browser.",
     description: "React Three Fiber, custom GLSL shaders, and a purpose-built interface turn a product catalogue into an explorable digital object rather than a conventional storefront.",
-    cover: "image/ubmstorage/Thumbnail.png",
+    cover: "image/ubmstorage/UBM Thumb Black.png",
     url: "https://console-rafyragah.netlify.app/",
     tech: ["React", "Three.js", "React Three Fiber", "GLSL", "Vite", "Zustand"],
     images: ["image/ubmstorage/Thumbnail.png", "image/ubmstorage/LP - 3D PSP.png", "image/ubmstorage/PSP - Boot Logo UBM.png", "image/ubmstorage/PSP - Menu Custom UI.png", "image/ubmstorage/PSP - Product Catalog.png"]
@@ -89,7 +89,7 @@ const PROJECTS = [
     timeline: "4 months",
     summary: "An offline-first command centre connecting office managers with distributed field survey teams.",
     description: "The system combines mobile survey capture, geolocation validation, team coordination, data review, and real-time administrative analytics across one operational workflow.",
-    cover: "image/digivass/MobileMockup.png",
+    cover: "image/digivass/Digivass Thumb Black.png",
     tech: ["React Native", "NestJS", "PostgreSQL", "Supabase", "Expo"],
     images: ["image/digivass/MobileMockup.png", "image/digivass/AdminDashboard.png", "image/digivass/AdminCreateSurvey.png", "image/digivass/AdminManageTeam.png", "image/digivass/AdminSurveyDetail.png", "image/digivass/AdminValidation.png"]
   },
@@ -104,7 +104,7 @@ const PROJECTS = [
     timeline: "10 weeks",
     summary: "An Indonesian phone-specification portal with structured discovery, comparison, SEO, and custom CMS tooling.",
     description: "Built with Leaf MVC and Eloquent ORM, the platform combines device search, side-by-side comparison, structured content ingestion, advertising controls, sitemaps, and technical SEO metadata.",
-    cover: "image/spekhp/Main.png",
+    cover: "image/spekhp/Thumb Black.png",
     url: "https://perpahmian-dev.lovestoblog.com/",
     tech: ["Leaf MVC", "PHP", "Alpine.js", "MySQL", "Eloquent ORM", "Vite"],
     images: ["image/spekhp/Main.png", "image/spekhp/Main2.png", "image/spekhp/Dashboard-SearchHP.png", "image/spekhp/Dashboard-HPCompare.png", "image/spekhp/Admin-Dashboard.png"]
@@ -120,7 +120,7 @@ const PROJECTS = [
     timeline: "2 months",
     summary: "A synchronized classroom platform for IELTS practice, assessment, resources, and administrative analysis.",
     description: "Laravel and Inertia.js coordinate a responsive learning experience using optimized REST strategies for live practice, quiz delivery, assessment workflows, and progress analytics.",
-    cover: "image/justspeak/Dashboard.png",
+    cover: "image/justspeak/Thumb Black.png",
     url: "https://justspeak.co.id/",
     tech: ["Laravel", "Inertia.js", "Vue.js", "MySQL", "Tailwind CSS"],
     images: ["image/justspeak/Dashboard.png", "image/justspeak/Quiz.png", "image/justspeak/Resources.png", "image/justspeak/Admin - Dashboard.png", "image/justspeak/Admin - Analytics.png", "image/justspeak/Admin - Assessment.png"]
@@ -152,7 +152,7 @@ const PROJECTS = [
     timeline: "1 month",
     summary: "A psychology and counselling platform connecting service discovery, registration, and psychologist selection.",
     description: "The responsive platform brings together counselling information, service discovery, registration flows, psychologist profiles, and operational views for the care team.",
-    cover: "image/mentalhealing/Dashboard.png",
+    cover: "image/mentalhealing/Thumb Black.png",
     url: "https://mentalhealing.id/home",
     tech: ["Next.js", "TypeScript", "Supabase", "Tailwind CSS", "Chart.js"],
     images: ["image/mentalhealing/Dashboard.png", "image/mentalhealing/Layanan.png", "image/mentalhealing/ListPsikolog.png"]
@@ -168,7 +168,7 @@ const PROJECTS = [
     timeline: "3 weeks",
     summary: "A fast architectural portfolio pairing technical SEO with immersive 360° project views.",
     description: "The Svelte build presents project catalogues, detailed case pages, and Panolens.js VR experiences while keeping the public site lightweight and discoverable.",
-    cover: "image/2watuju/DashboardCatalog.png",
+    cover: "image/2watuju/Thumb Black.png",
     url: "https://2watuju.com/",
     tech: ["Svelte", "Panolens.js", "Three.js", "Vite", "Technical SEO"],
     images: ["image/2watuju/DashboardCatalog.png", "image/2watuju/About.png", "image/2watuju/ProjectDetail.png", "image/2watuju/ProjectReview.png"]
@@ -199,7 +199,7 @@ const PROJECTS = [
     timeline: "3 months",
     summary: "A role-based job marketplace connecting university students, companies, and career-centre administrators.",
     description: "Separate journeys for candidates, employers, and administrators cover vacancy publishing, applications, profile management, and operational review.",
-    cover: "image/cced/LandingPage.png",
+    cover: "image/cced/Thumb Black.png",
     tech: ["Laravel", "Vue.js", "MySQL", "Tailwind CSS", "RBAC"],
     images: ["image/cced/LandingPage.png", "image/cced/JobSeekerDashboard.png", "image/cced/CompanyDashboard.png", "image/cced/CompanyProfile.png", "image/cced/AdminDashboard.png"]
   },
@@ -230,7 +230,7 @@ const PROJECTS = [
     timeline: "6 weeks",
     summary: "A corporate identity platform whose public content is managed through a custom administrative workflow.",
     description: "Every major section is editable through a Supabase-backed content system with responsive previews for consistent publishing.",
-    cover: "image/navaraprofile/1.png",
+    cover: "image/navaraprofile/Navara.png",
     url: "https://navara-invitation.vercel.app/",
     tech: ["Next.js", "Supabase", "TypeScript", "Tailwind CSS"],
     images: ["image/navaraprofile/1.png", "image/navaraprofile/2.png", "image/navaraprofile/3.png", "image/navaraprofile/4.png", "image/navaraprofile/5.png", "image/navaraprofile/6.png"]
@@ -246,7 +246,7 @@ const PROJECTS = [
     timeline: "2 weeks",
     summary: "A personalized event invitation system with guest-link generation and live RSVP tracking.",
     description: "Google Sheets integration connects guest records with unique invitation links, QR access, and response monitoring for event operations.",
-    cover: "image/navaraopening/1.png",
+    cover: "image/navaraopening/Navara.png",
     url: "https://navaraopening.netlify.app/",
     tech: ["Google Sheets API", "Laravel", "QR Code", "MySQL"],
     images: ["image/navaraopening/1.png", "image/navaraopening/2.png", "image/navaraopening/3.png", "image/navaraopening/4.png", "image/navaraopening/5.png", "image/navaraopening/6.png"]
@@ -277,7 +277,7 @@ const PROJECTS = [
     timeline: "2 months",
     summary: "A clear digital service for land-office waqf requirements, maps, documents, and public information.",
     description: "The service organizes requirements and guidance into accessible flows with interactive maps, expandable references, and connected document resources.",
-    cover: "image/wakaf/1.png",
+    cover: "image/wakaf/BPN.png",
     tech: ["Laravel", "MySQL", "Tailwind CSS", "Alpine.js"],
     images: ["image/wakaf/1.png", "image/wakaf/2.png", "image/wakaf/3.png"]
   }
