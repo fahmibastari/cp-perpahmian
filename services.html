@@ -8,13 +8,17 @@
   <link rel="canonical" href="https://cp-perpahmian.vercel.app/services.html">
   <meta property="og:type" content="website"><meta property="og:site_name" content="perpahmian.tech">
   <meta property="og:title" content="Services — perpahmian.tech"><meta property="og:description" content="Product discovery, focused builds, end-to-end delivery, and ongoing product engineering.">
-  <meta property="og:url" content="https://cp-perpahmian.vercel.app/services.html"><meta property="og:image" content="https://cp-perpahmian.vercel.app/image/sicater/Thumbnail-Sicater.png"><meta name="twitter:card" content="summary_large_image">
+  <meta property="og:url" content="https://cp-perpahmian.vercel.app/services.html"><meta property="og:image" content="https://cp-perpahmian.vercel.app/image/sicater/Thumbnail-Sicater.png"><meta property="og:image:alt" content="Product engineering work by perpahmian.tech"><meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Services — perpahmian.tech"><meta name="twitter:description" content="Product discovery, focused builds, end-to-end delivery, and ongoing product engineering."><meta name="twitter:image" content="https://cp-perpahmian.vercel.app/image/sicater/Thumbnail-Sicater.png"><meta name="author" content="perpahmian.tech">
   <title>Services — perpahmian.tech</title>
   <link rel="icon" href="image/profile/Logo Icon.png">
   <link rel="apple-touch-icon" href="image/profile/Logo Icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20260829a"><script src="script.js?v=20260829a" defer></script>
+  <link rel="stylesheet" href="styles.css?v=20260829f"><script src="script.js?v=20260829f" defer></script>
+  <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"Service","name":"Product engineering services","provider":{"@type":"ProfessionalService","name":"perpahmian.tech","url":"https://cp-perpahmian.vercel.app/"},"areaServed":"Worldwide","serviceType":["Product definition","Web and mobile engineering","Operational systems","Immersive web"]}
+  </script>
 </head>
 <body data-page="services">
   <a class="skip-link" href="#main">Skip to content</a><div data-site-header></div>
@@ -23,20 +27,25 @@
       <h1>From unclear brief to working product.</h1>
       <div><p>We join where the work is uncertain, technically demanding, or operationally important—and leave behind a product your team can understand and run.</p></div>
     </header>
-    <section class="service-detail page-shell" aria-label="Services">
-      <article id="product" class="service-detail__row">
+    <section class="service-detail page-shell" aria-label="Services" data-service-scroll>
+      <div class="service-progress" aria-hidden="true">
+        <span>Capabilities</span>
+        <div class="service-progress__track"><i data-service-progress></i></div>
+        <strong data-service-count>01 / 04</strong>
+      </div>
+      <article id="product" class="service-detail__row is-active" data-service-step style="--service-opacity: 1; --service-y: 0px">
         <div><span class="service-index">A</span><h2>Product definition</h2></div>
         <div><p>Before code, we map the users, operating constraints, critical workflows, and decisions the product must support.</p><ul><li>Discovery and requirements</li><li>Workflow and information architecture</li><li>Technical feasibility and delivery plan</li><li>Prototype direction</li></ul></div>
       </article>
-      <article id="engineering" class="service-detail__row">
+      <article id="engineering" class="service-detail__row" data-service-step style="--service-opacity: 0.7; --service-y: 10px">
         <div><span class="service-index">B</span><h2>Web & mobile engineering</h2></div>
         <div><p>Responsive public products, internal platforms, and cross-platform applications built for maintainability and real operating conditions.</p><ul><li>Web applications and portals</li><li>React Native mobile applications</li><li>Back-end services and APIs</li><li>CMS and administrative systems</li></ul></div>
       </article>
-      <article id="systems" class="service-detail__row">
+      <article id="systems" class="service-detail__row" data-service-step style="--service-opacity: 0.7; --service-y: 10px">
         <div><span class="service-index">C</span><h2>Operational systems</h2></div>
         <div><p>Connected tools for work that happens across desks, field teams, devices, and uneven network conditions.</p><ul><li>Offline-first data capture</li><li>Roles, approvals, and audit trails</li><li>Dashboards and operational reporting</li><li>AI-assisted OCR and automation</li></ul></div>
       </article>
-      <article id="immersive" class="service-detail__row">
+      <article id="immersive" class="service-detail__row" data-service-step style="--service-opacity: 0.7; --service-y: 10px">
         <div><span class="service-index">D</span><h2>Immersive web</h2></div>
         <div><p>Interactive 3D and WebGL experiences that earn their technical weight through exploration, utility, or product storytelling.</p><ul><li>React Three Fiber experiences</li><li>Interactive product environments</li><li>Custom shaders and spatial UI</li><li>Performance-aware delivery</li></ul></div>
       </article>

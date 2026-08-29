@@ -2,6 +2,8 @@ const ICON_ARROW_UP_RIGHT = `<svg class="ui-arrow" viewBox="0 0 16 16" aria-hidd
 const ICON_ARROW_RIGHT = `<svg class="ui-arrow" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 const ICON_ARROW_LEFT = `<svg class="ui-arrow" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M13 8H3M7 4 3 8l4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 
+document.documentElement.classList.add("has-js");
+
 const SITE_LINKS = [
   ["home", "Home", "index.html"],
   ["work", "Work", "work.html"],
@@ -151,6 +153,7 @@ function projectCard(project, featured = false) {
       <a class="project-card__link" href="project.html?id=${project.id}" aria-label="View ${project.name} case study">
         <div class="project-card__media">
           <img src="${project.cover}" width="1600" height="1200" loading="lazy" alt="${project.name} product interface">
+          <span class="project-card__media-action" aria-hidden="true">View case study ${ICON_ARROW_UP_RIGHT}</span>
         </div>
         <div class="project-card__body">
           <div>
@@ -160,6 +163,7 @@ function projectCard(project, featured = false) {
           <span class="project-card__arrow" aria-hidden="true">${ICON_ARROW_UP_RIGHT}</span>
           <p class="project-card__workstream">${project.workstream}</p>
           <p>${project.summary}</p>
+          <p class="project-card__status"><span aria-hidden="true"></span>${project.status}</p>
         </div>
       </a>
     </article>`;
@@ -169,7 +173,144 @@ function renderFeaturedProjects() {
   const target = document.querySelector("[data-featured-projects]");
   if (!target || typeof PROJECTS === "undefined") return;
   const featured = FEATURED_PROJECT_IDS.map(getProject).filter(Boolean);
-  target.innerHTML = featured.map((project) => projectCard(project, true)).join("");
+  const layers = featured.map((project, index) => `
+    <a class="scroll-work__layer${index === 0 ? " is-active" : ""}" data-scroll-layer="${index}" href="project.html?id=${project.id}" aria-label="View ${project.name} case study" aria-hidden="${index === 0 ? "false" : "true"}" tabindex="${index === 0 ? "0" : "-1"}">
+      <figure>
+        <img src="${project.cover}" width="1600" height="1200" ${index === 0 ? "" : "loading=\"lazy\""} alt="${project.name} product interface">
+        <figcaption>
+          <span>${String(index + 1).padStart(2, "0")} / ${String(featured.length).padStart(2, "0")} · ${project.kind}</span>
+          <strong>${project.name}</strong>
+          <small>${project.workstream}</small>
+        </figcaption>
+      </figure>
+    </a>`).join("");
+
+  const steps = featured.map((project, index) => `
+    <article class="scroll-work__step${index === 0 ? " is-active" : ""}" data-scroll-step="${index}" style="--step-opacity: ${index === 0 ? "1" : "0.48"}; --step-y: ${index === 0 ? "0px" : "12px"}">
+      <a class="scroll-work__mobile-media" href="project.html?id=${project.id}" aria-label="View ${project.name} case study">
+        <img src="${project.cover}" width="1600" height="1200" loading="lazy" alt="${project.name} product interface">
+      </a>
+      <div class="scroll-work__step-body">
+        <p class="scroll-work__meta">${String(index + 1).padStart(2, "0")} / ${String(featured.length).padStart(2, "0")} · ${project.kind}</p>
+        <h3>${project.name}</h3>
+        <p>${project.summary}</p>
+        <a class="text-link" href="project.html?id=${project.id}">View case study ${ICON_ARROW_RIGHT}</a>
+      </div>
+    </article>`).join("");
+
+  target.innerHTML = `
+    <div class="scroll-work__stage" data-scroll-stage>
+      <div class="scroll-work__frame">${layers}</div>
+      <div class="scroll-work__progress" aria-hidden="true"><span data-scroll-progress></span></div>
+      <p class="scroll-work__hint"><span aria-hidden="true">↓</span> Scroll to move through the work</p>
+    </div>
+    <div class="scroll-work__steps">${steps}</div>`;
+}
+
+function setupFeaturedScroll() {
+  const root = document.querySelector("[data-featured-projects]");
+  if (!root) return;
+
+  const layers = [...root.querySelectorAll("[data-scroll-layer]")];
+  const steps = [...root.querySelectorAll("[data-scroll-step]")];
+  const progress = root.querySelector("[data-scroll-progress]");
+  const desktop = window.matchMedia("(min-width: 60rem)");
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  let frameRequested = false;
+  let activeIndex = -1;
+
+  const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+
+  function setActive(index) {
+    if (index === activeIndex) return;
+    activeIndex = index;
+    layers.forEach((layer, layerIndex) => {
+      const active = layerIndex === index;
+      layer.classList.toggle("is-active", active);
+      layer.setAttribute("aria-hidden", String(!active));
+      layer.tabIndex = active ? 0 : -1;
+    });
+    steps.forEach((step, stepIndex) => step.classList.toggle("is-active", stepIndex === index));
+  }
+
+  function resetMobile() {
+    layers.forEach((layer, index) => {
+      layer.style.removeProperty("--layer-opacity");
+      layer.style.removeProperty("--layer-y");
+      layer.style.removeProperty("--layer-scale");
+      layer.setAttribute("aria-hidden", "true");
+      layer.tabIndex = -1;
+    });
+    steps.forEach((step) => {
+      step.style.removeProperty("--step-opacity");
+      step.style.removeProperty("--step-y");
+    });
+    if (progress) progress.style.removeProperty("transform");
+    activeIndex = -1;
+  }
+
+  function update() {
+    frameRequested = false;
+    if (!desktop.matches || !steps.length) {
+      resetMobile();
+      return;
+    }
+
+    const viewportCenter = window.innerHeight * 0.5;
+    const centers = steps.map((step) => {
+      const rect = step.getBoundingClientRect();
+      return rect.top + rect.height * 0.5;
+    });
+
+    let position = 0;
+    if (viewportCenter >= centers[centers.length - 1]) {
+      position = centers.length - 1;
+    } else if (viewportCenter > centers[0]) {
+      const before = centers.findIndex((center, index) => index < centers.length - 1 && viewportCenter >= center && viewportCenter < centers[index + 1]);
+      if (before >= 0) {
+        const distance = centers[before + 1] - centers[before];
+        position = before + (viewportCenter - centers[before]) / distance;
+      }
+    }
+
+    const nearest = clamp(Math.round(position), 0, layers.length - 1);
+    setActive(nearest);
+
+    layers.forEach((layer, index) => {
+      const distance = index - position;
+      const rawPresence = clamp(1 - Math.abs(distance), 0, 1);
+      const easedPresence = rawPresence * rawPresence * (3 - 2 * rawPresence);
+      const presence = reduceMotion.matches ? (index === nearest ? 1 : 0) : easedPresence;
+      const offset = reduceMotion.matches ? 0 : clamp(distance, -1, 1) * 30;
+      const scale = reduceMotion.matches ? 1 : 1 - clamp(Math.abs(distance), 0, 1) * 0.018;
+      layer.style.setProperty("--layer-opacity", presence.toFixed(3));
+      layer.style.setProperty("--layer-y", `${offset.toFixed(2)}px`);
+      layer.style.setProperty("--layer-scale", scale.toFixed(4));
+    });
+
+    steps.forEach((step, index) => {
+      const focus = reduceMotion.matches ? 1 : clamp(1 - Math.abs(index - position), 0, 1);
+      step.style.setProperty("--step-opacity", (0.48 + focus * 0.52).toFixed(3));
+      step.style.setProperty("--step-y", `${((1 - focus) * 12).toFixed(2)}px`);
+    });
+
+    if (progress) {
+      const amount = layers.length > 1 ? position / (layers.length - 1) : 1;
+      progress.style.transform = `scaleX(${clamp(amount, 0, 1).toFixed(4)})`;
+    }
+  }
+
+  function requestUpdate() {
+    if (frameRequested) return;
+    frameRequested = true;
+    window.requestAnimationFrame(update);
+  }
+
+  window.addEventListener("scroll", requestUpdate, { passive: true });
+  window.addEventListener("resize", requestUpdate);
+  desktop.addEventListener("change", requestUpdate);
+  reduceMotion.addEventListener("change", requestUpdate);
+  requestUpdate();
 }
 
 function setupHeroShowcase() {
@@ -187,6 +328,7 @@ function setupHeroShowcase() {
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   let current = 0;
   let rotation = null;
+  let swapTimer = null;
   let isHovered = false;
   let isFocused = false;
 
@@ -206,6 +348,22 @@ function setupHeroShowcase() {
     count.textContent = `${String(index + 1).padStart(2, "0")} / ${String(showcase.length).padStart(2, "0")}`;
   }
 
+  function transitionToProject(index) {
+    window.clearTimeout(swapTimer);
+    if (reduceMotion.matches) {
+      showProject(index);
+      return;
+    }
+
+    link.classList.add("is-switching");
+    swapTimer = window.setTimeout(() => {
+      showProject(index);
+      window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(() => link.classList.remove("is-switching"));
+      });
+    }, 170);
+  }
+
   function stopRotation() {
     window.clearInterval(rotation);
     rotation = null;
@@ -216,7 +374,7 @@ function setupHeroShowcase() {
     if (reduceMotion.matches || document.hidden || isHovered || isFocused) return;
     rotation = window.setInterval(() => {
       current = (current + 1) % showcase.length;
-      showProject(current);
+      transitionToProject(current);
     }, 8000);
   }
 
@@ -236,7 +394,12 @@ function setupHeroShowcase() {
     isFocused = false;
     startRotation();
   });
-  reduceMotion.addEventListener("change", startRotation);
+  reduceMotion.addEventListener("change", () => {
+    window.clearTimeout(swapTimer);
+    link.classList.remove("is-switching");
+    showProject(current);
+    startRotation();
+  });
   document.addEventListener("visibilitychange", startRotation);
 
   showProject(current);
@@ -271,28 +434,58 @@ function renderProjectGrid() {
   const buttons = [...document.querySelectorAll("[data-filter]")];
   const cards = [...grid.querySelectorAll(".project-card")];
 
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  let filterRun = 0;
+  let runningFilterAnimations = [];
+
   buttons.forEach((button) => {
-    button.addEventListener("click", () => {
+    button.addEventListener("click", async () => {
       const filter = button.dataset.filter;
+      if (button.classList.contains("is-active")) return;
+      const currentRun = ++filterRun;
+      runningFilterAnimations.forEach((animation) => animation.cancel());
+      runningFilterAnimations = [];
       buttons.forEach((item) => {
         const active = item === button;
         item.classList.toggle("is-active", active);
         item.setAttribute("aria-pressed", String(active));
       });
 
-      let visible = 0;
-      cards.forEach((card) => {
-        const matches = filter === "all" || card.dataset.projectFilters.split(" ").includes(filter);
-        card.classList.toggle("is-hidden", !matches);
-        if (matches) visible += 1;
-      });
+      const matchesFilter = (card) => filter === "all" || card.dataset.projectFilters.split(" ").includes(filter);
+      const matchedCards = cards.filter(matchesFilter);
+      const leavingCards = cards.filter((card) => !card.classList.contains("is-hidden") && !matchesFilter(card));
+      const enteringCards = cards.filter((card) => card.classList.contains("is-hidden") && matchesFilter(card));
+
+      if (!reduceMotion.matches && leavingCards.length) {
+        const exits = leavingCards.map((card, index) => card.animate([
+          { opacity: 1, transform: "translateY(0) scale(1)" },
+          { opacity: 0, transform: "translateY(8px) scale(.992)" }
+        ], { duration: 150, delay: Math.min(index * 12, 72), easing: "cubic-bezier(.4, 0, 1, 1)", fill: "forwards" }));
+        runningFilterAnimations = exits;
+        await Promise.all(exits.map((animation) => animation.finished.catch(() => {})));
+        exits.forEach((animation) => animation.cancel());
+        if (currentRun !== filterRun) return;
+      }
+
+      cards.forEach((card) => card.classList.toggle("is-hidden", !matchesFilter(card)));
 
       grid.querySelectorAll("[data-work-group]").forEach((group) => {
-        const hasVisibleCards = [...group.querySelectorAll(".project-card")].some((card) => !card.classList.contains("is-hidden"));
+        const hasVisibleCards = [...group.querySelectorAll(".project-card")].some(matchesFilter);
         group.classList.toggle("is-hidden", !hasVisibleCards);
       });
 
-      if (status) status.textContent = `${visible} ${visible === 1 ? "project" : "projects"} shown`;
+      if (!reduceMotion.matches) {
+        const entrances = enteringCards.map((card, index) => card.animate([
+          { opacity: 0, transform: "translateY(10px)" },
+          { opacity: 1, transform: "translateY(0)" }
+        ], { duration: 260, delay: Math.min(index * 32, 192), easing: "cubic-bezier(.16, 1, .3, 1)" }));
+        runningFilterAnimations = entrances;
+        Promise.all(entrances.map((animation) => animation.finished.catch(() => {}))).then(() => {
+          if (currentRun === filterRun) runningFilterAnimations = [];
+        });
+      }
+
+      if (status) status.textContent = `${matchedCards.length} ${matchedCards.length === 1 ? "project" : "projects"} shown`;
     });
   });
 }
@@ -326,7 +519,11 @@ function renderProjectDetail() {
     'meta[property="og:title"]': `${project.name} — perpahmian.tech`,
     'meta[property="og:description"]': project.summary,
     'meta[property="og:url"]': projectUrl,
-    'meta[property="og:image"]': projectImage
+    'meta[property="og:image"]': projectImage,
+    'meta[property="og:image:alt"]': `${project.name} product interface by perpahmian.tech`,
+    'meta[name="twitter:title"]': `${project.name} — perpahmian.tech`,
+    'meta[name="twitter:description"]': project.summary,
+    'meta[name="twitter:image"]': projectImage
   };
   Object.entries(socialMeta).forEach(([selector, content]) => {
     const element = document.querySelector(selector);
@@ -342,9 +539,23 @@ function renderProjectDetail() {
     description: project.summary,
     url: projectUrl,
     image: projectImage,
-    creator: { "@type": "Organization", name: "perpahmian.tech" }
+    dateCreated: project.year,
+    genre: project.category,
+    creator: { "@type": "Organization", name: "perpahmian.tech", url: "https://cp-perpahmian.vercel.app/" }
   });
   document.head.append(caseSchema);
+
+  const breadcrumbSchema = document.createElement("script");
+  breadcrumbSchema.type = "application/ld+json";
+  breadcrumbSchema.textContent = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Work", item: "https://cp-perpahmian.vercel.app/work.html" },
+      { "@type": "ListItem", position: 2, name: project.name, item: projectUrl }
+    ]
+  });
+  document.head.append(breadcrumbSchema);
   const projectIndex = PROJECTS.findIndex((item) => item.id === project.id);
   const next = PROJECTS[(projectIndex + 1) % PROJECTS.length];
   const externalLink = project.url
@@ -379,6 +590,8 @@ function renderProjectDetail() {
         <div><dt>Engagement</dt><dd>${project.kind}</dd></div>
         <div><dt>Timeline</dt><dd>${project.timeline}</dd></div>
         <div><dt>Status</dt><dd>${project.status}</dd></div>
+        <div><dt>Product area</dt><dd>${project.category}</dd></div>
+        <div><dt>Year</dt><dd>${project.year}</dd></div>
       </dl>
     </section>
     <section class="case-story page-shell">
@@ -395,6 +608,7 @@ function renderProjectDetail() {
     </section>
     <section class="case-evidence page-shell" aria-label="Project evidence and technology">
       <div><span>Delivery evidence</span><strong>${project.proof}</strong></div>
+      <div><span>Product scope</span><strong>${project.workstream}</strong></div>
       <div><span>Technology</span><ul class="tech-list" aria-label="Technology used">${project.tech.map((tech) => `<li>${tech}</li>`).join("")}</ul></div>
     </section>
     <section class="project-gallery page-shell" aria-label="Project gallery">${gallery}</section>
@@ -494,10 +708,113 @@ function setupContactForm() {
   });
 }
 
+function setupServiceScroll() {
+  const root = document.querySelector("[data-service-scroll]");
+  if (!root) return;
+
+  const steps = [...root.querySelectorAll("[data-service-step]")];
+  const progress = root.querySelector("[data-service-progress]");
+  const count = root.querySelector("[data-service-count]");
+  const desktop = window.matchMedia("(min-width: 60rem)");
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  let frameRequested = false;
+  let activeIndex = -1;
+
+  const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+
+  function update() {
+    frameRequested = false;
+
+    if (!desktop.matches || reduceMotion.matches) {
+      steps.forEach((step) => {
+        step.classList.remove("is-active");
+        step.style.setProperty("--service-opacity", "1");
+        step.style.setProperty("--service-y", "0px");
+      });
+      if (progress) progress.style.transform = "scaleX(1)";
+      if (count) count.textContent = `${String(steps.length).padStart(2, "0")} / ${String(steps.length).padStart(2, "0")}`;
+      activeIndex = -1;
+      return;
+    }
+
+    const focusLine = window.innerHeight * 0.48;
+    const centers = steps.map((step) => {
+      const rect = step.getBoundingClientRect();
+      return rect.top + rect.height * 0.5;
+    });
+
+    let position = 0;
+    if (focusLine >= centers[centers.length - 1]) {
+      position = centers.length - 1;
+    } else if (focusLine > centers[0]) {
+      const before = centers.findIndex((center, index) => index < centers.length - 1 && focusLine >= center && focusLine < centers[index + 1]);
+      if (before >= 0) {
+        position = before + (focusLine - centers[before]) / (centers[before + 1] - centers[before]);
+      }
+    }
+
+    const nearest = clamp(Math.round(position), 0, steps.length - 1);
+    if (nearest !== activeIndex) {
+      activeIndex = nearest;
+      steps.forEach((step, index) => step.classList.toggle("is-active", index === nearest));
+      if (count) count.textContent = `${String(nearest + 1).padStart(2, "0")} / ${String(steps.length).padStart(2, "0")}`;
+    }
+
+    steps.forEach((step, index) => {
+      const focus = clamp(1 - Math.abs(index - position), 0, 1);
+      step.style.setProperty("--service-opacity", (0.7 + focus * 0.3).toFixed(3));
+      step.style.setProperty("--service-y", `${((1 - focus) * 10).toFixed(2)}px`);
+    });
+
+    if (progress) progress.style.transform = `scaleX(${((position + 1) / steps.length).toFixed(4)})`;
+  }
+
+  function requestUpdate() {
+    if (frameRequested) return;
+    frameRequested = true;
+    window.requestAnimationFrame(update);
+  }
+
+  window.addEventListener("scroll", requestUpdate, { passive: true });
+  window.addEventListener("resize", requestUpdate);
+  desktop.addEventListener("change", requestUpdate);
+  reduceMotion.addEventListener("change", requestUpdate);
+  requestUpdate();
+}
+
+function setupPageTransitions() {
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  function revealPage() {
+    document.body.classList.remove("is-page-leaving");
+    window.requestAnimationFrame(() => document.body.classList.add("is-page-ready"));
+  }
+
+  revealPage();
+  window.addEventListener("pageshow", revealPage);
+
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href]");
+    if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    if (link.target === "_blank" || link.hasAttribute("download") || reduceMotion.matches) return;
+
+    const destination = new URL(link.href, window.location.href);
+    const sameDocumentAnchor = destination.pathname === window.location.pathname && destination.search === window.location.search && destination.hash;
+    if (destination.origin !== window.location.origin || sameDocumentAnchor || !/\.html$|\/$/.test(destination.pathname)) return;
+
+    event.preventDefault();
+    document.body.classList.add("is-page-leaving");
+    window.setTimeout(() => window.location.assign(destination.href), 180);
+  });
+}
+
 mountSiteChrome();
 setupMenu();
 setupHeroShowcase();
 renderFeaturedProjects();
+setupFeaturedScroll();
 renderProjectGrid();
 renderProjectDetail();
 setupContactForm();
+setupServiceScroll();
+setupPageTransitions();
