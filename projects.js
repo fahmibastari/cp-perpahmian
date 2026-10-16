@@ -27,8 +27,14 @@ const PROJECTS = [
     description: "The product spans Android and iOS, a web dashboard, real-time messaging, subscription workflows, AI segmentation with PyTorch, and custom park maps rendered from high-resolution geographic tiles.",
     cover: "image/magicpin/MP Thumb Black.png",
     url: "https://www.magicpinapp.com/",
+    linkLabel: "Product website",
+    publicLinks: [
+      { label: "App Store", url: "https://apps.apple.com/us/app/magicpin-disney-pin-collector/id1554341677", platform: "iOS" },
+      { label: "Google Play", url: "https://play.google.com/store/apps/details?id=freshworks.io.magicpintrading", platform: "Android" }
+    ],
+    linkNote: "Published by S&P Holbrook, LLC. Store availability may vary by region and device.",
     tech: ["NestJS", "React Native", "Python", "PyTorch", "Socket.io", "PostgreSQL", "Leaflet"],
-    images: ["image/magicpin/Thumbnail.jpg", "image/magicpin/Mobile - FullMapTiles.png", "image/magicpin/DashboardGuest3.png", "image/magicpin/Web - Marketplace.png", "image/magicpin/Web - Map Tiles - List Map.png", "image/magicpin/Mobile - Pin Detail.png"]
+    images: ["image/magicpin/DashboardGuest3.png", "image/magicpin/Web - Map Tiles - List Map.png", "image/magicpin/Mobile - FullMapTiles.png", "image/magicpin/Mobile - Pin Detail.png"]
   },
   {
     id: "worldofbooth",
@@ -59,6 +65,8 @@ const PROJECTS = [
     description: "The mobile workflow captures precise roasting activity while the administrative platform centralizes inventory, production records, roaster management, and analysis.",
     cover: "image/flamboys/Flambo Thumb Black.png",
     url: "https://drive.google.com/file/d/1aQOnqPLuiHevr6noDFuJ0I9fySmNS4ZF/view?usp=sharing",
+    linkLabel: "View project file",
+    linkNote: "External file hosted on Google Drive.",
     tech: ["React Native", "Supabase", "Laravel", "Vue.js", "PostgreSQL", "Firebase"],
     images: ["image/flamboys/Mobile - HomeMenu.png", "image/flamboys/Mobile - RoastingSession.png", "image/flamboys/Admin - DashboardAnalytics.png", "image/flamboys/Admin - InventoryList.png", "image/flamboys/Admin - LogRORDetails.png", "image/flamboys/Admin - RoasterManagement.png"]
   },
@@ -75,6 +83,8 @@ const PROJECTS = [
     description: "React Three Fiber, custom GLSL shaders, and a purpose-built interface turn a product catalogue into an explorable digital object rather than a conventional storefront.",
     cover: "image/ubmstorage/UBM Thumb Black.png",
     url: "https://console-rafyragah.netlify.app/",
+    linkLabel: "Open browser demo",
+    linkNote: "Interactive 3D demo. Requires a browser and device with WebGL support.",
     tech: ["React", "Three.js", "React Three Fiber", "GLSL", "Vite", "Zustand"],
     images: ["image/ubmstorage/Thumbnail.png", "image/ubmstorage/LP - 3D PSP.png", "image/ubmstorage/PSP - Boot Logo UBM.png", "image/ubmstorage/PSP - Menu Custom UI.png", "image/ubmstorage/PSP - Product Catalog.png"]
   },
@@ -122,6 +132,7 @@ const PROJECTS = [
     description: "Laravel and Inertia.js coordinate a responsive learning experience using optimized REST strategies for live practice, quiz delivery, assessment workflows, and progress analytics.",
     cover: "image/justspeak/Thumb Black.png",
     url: "https://justspeak.co.id/",
+    linkNote: "Client-managed website. The current site may differ from the delivery documented here.",
     tech: ["Laravel", "Inertia.js", "Vue.js", "MySQL", "Tailwind CSS"],
     images: ["image/justspeak/Dashboard.png", "image/justspeak/Quiz.png", "image/justspeak/Resources.png", "image/justspeak/Admin - Dashboard.png", "image/justspeak/Admin - Analytics.png", "image/justspeak/Admin - Assessment.png"]
   },
@@ -170,6 +181,7 @@ const PROJECTS = [
     description: "The Svelte build presents project catalogues, detailed case pages, and Panolens.js VR experiences while keeping the public site lightweight and discoverable.",
     cover: "image/2watuju/Thumb Black.png",
     url: "https://2watuju.com/",
+    linkNote: "Client-managed website. The current site may differ from the delivery documented here.",
     tech: ["Svelte", "Panolens.js", "Three.js", "Vite", "Technical SEO"],
     images: ["image/2watuju/DashboardCatalog.png", "image/2watuju/About.png", "image/2watuju/ProjectDetail.png", "image/2watuju/ProjectReview.png"]
   },
@@ -440,7 +452,7 @@ const PROJECT_DETAILS = {
     context: "A personalized digital invitation and RSVP tool for a company opening event.",
     challenge: "Guest information, individual links, access, and attendance responses needed to remain coordinated during event preparation.",
     response: "We connected spreadsheet-based guest records with personalized invitation links, QR access, and live response tracking.",
-    outcome: "A focused event tool that reduced manual coordination around invitation distribution and RSVP monitoring.",
+    outcome: "A focused event tool that brings invitation distribution and RSVP monitoring into one coordinated workflow.",
     proof: "Delivered for a real company opening event.",
     status: "Event delivery"
   },
@@ -466,13 +478,133 @@ const PROJECT_DETAILS = {
   }
 };
 
+// Editorial case notes: supplied client context + the existing project archive.
+// These describe implementation, not independently measured business results.
+// Screen numbers reference the public gallery, starting at 1.
+const PROJECT_CASE_STUDIES = {
+  sicater: {
+    title: "Connecting meter work with utility oversight.",
+    contribution: "Full-stack delivery across the mobile field application and office-facing systems. The work connects meter capture and validation with the records and reporting used by administrators and management.",
+    decisions: [
+      { title: "Keep field work mobile", body: "The field application brings operational information to the device used on site. Offline-first capture addresses work in areas where a continuous connection cannot be assumed.", screen: 5 },
+      { title: "Make meter identity part of capture", body: "NFC verification sits alongside the meter-reading workflow. The interface makes the meter being checked an explicit part of the record, rather than relying on a reading alone.", screen: 6 },
+      { title: "Give the office a different view", body: "The administrative dashboard organizes utility operations for review. Field capture and office oversight share a product ecosystem without needing the same interface.", screen: 2 }
+    ],
+    delivery: "Used by a regional water utility (PDAM/BUMD). The public material shows field and office interfaces; it does not publish utility records or quantify operational savings."
+  },
+  magicpin: {
+    title: "A collecting experience across web and mobile.",
+    contribution: "Full-stack development within a collaborative engagement for an overseas client. The contribution spans the connected web and mobile product, including collector workflows, map experiences, real-time communication, and AI-assisted image processing.",
+    decisions: [
+      { title: "Give the web product its own entry point", body: "The web presentation introduces the collector platform and its mobile experience. It gives visitors a way to understand the product before moving into individual collecting workflows.", screen: 1 },
+      { title: "Start map exploration with a park", body: "Park selection and geographic map tiles form a dedicated discovery interface. The same mapping capability appears on mobile, where the available screen space is very different.", screen: 2 },
+      { title: "Give each pin a dedicated detail view", body: "A mobile detail screen separates information about an individual pin from the wider collection. This keeps item-level interaction distinct from browsing and navigation.", screen: 4 }
+    ],
+    delivery: "Released for public use on iOS and Android, with a connected website. Selected web and mobile screens document the collector experience presented here."
+  },
+  flamboys: {
+    title: "Software shaped around the roasting floor.",
+    contribution: "Lead development of an internal operations tool: a mobile workflow for the roasting team and an administrative platform for production, inventory, and equipment records.",
+    decisions: [
+      { title: "Record a session where the work happens", body: "A focused mobile session view supports the act of recording roasting activity. It separates production input from the broader reporting workspace.", screen: 2 },
+      { title: "Keep inventory in the operating system", body: "Inventory has a dedicated administrative view alongside production records. The product scope covers the materials around roasting, not just the roasting session itself.", screen: 4 },
+      { title: "Keep detailed logs available for review", body: "A roasting-curve detail view lets the team inspect recorded activity beyond a dashboard summary. Equipment management is handled in a separate administrative view.", screen: 5 }
+    ],
+    delivery: "An internal tool built for a coffee-roasting business. The linked resource is a project file, not access to the company's operational application."
+  },
+  ubmstorage: {
+    title: "A product catalogue you can explore.",
+    contribution: "Front-end development of a commissioned 3D catalogue experience. The work combines a browser-rendered handheld object, a custom interface, and product browsing using React Three Fiber and GLSL.",
+    decisions: [
+      { title: "Make the catalogue an object", body: "The client wanted a distinctive way to present products. A retro-handheld form provides the visual setting for the catalogue rather than functioning as an unrelated decorative scene.", screen: 2 },
+      { title: "Give the object a usable interface", body: "A custom menu bridges the 3D presentation and the catalogue. Visitors have a recognizable navigation surface within the handheld concept.", screen: 4 },
+      { title: "Keep products at the destination", body: "The catalogue screen is the functional endpoint of the experience. The interaction leads back to the client's products instead of ending with the 3D effect.", screen: 5 }
+    ],
+    delivery: "A commissioned interactive catalogue. The public website and interface captures demonstrate the product presentation and front-end interaction; the scope described here is catalogue discovery."
+  },
+  digivass: {
+    title: "From field submissions to coordinated review.",
+    contribution: "Full-stack development of field-data tooling for work across Lampung province. The scope connects a mobile survey workflow with office tools for survey setup, team management, and record validation.",
+    decisions: [
+      { title: "Define the survey before collection", body: "An administrative survey-creation view gives coordinators a place to prepare the information to be collected. Survey setup is kept separate from day-to-day field submission.", screen: 3 },
+      { title: "Make team coordination visible", body: "A dedicated team-management interface supports coordination across distributed field workers. It complements the mobile toolkit used to capture records on site.", screen: 4 },
+      { title: "Give incoming records a review step", body: "Validation has its own administrative surface. Coordinators can work with submitted records as a review workflow, not only as totals on a dashboard.", screen: 6 }
+    ],
+    delivery: "Used for field data collection across Lampung province. Selected interfaces document survey setup, team coordination, and validation; the case study focuses on the operational tooling."
+  },
+  cced: {
+    title: "One career platform, distinct responsibilities.",
+    contribution: "Full-stack development of a hiring portal for CCED, an academic service unit at Universitas Lampung. The scope covers candidate, employer, and administrator journeys within one role-based platform.",
+    decisions: [
+      { title: "Give candidates their own workspace", body: "Students, fresh graduates, and other job seekers use a candidate-facing journey. Its dashboard is distinct from the tools used to publish and administer vacancies.", screen: 2 },
+      { title: "Separate the employer's work", body: "Companies have a dedicated workspace and profile surface. Employer workflows sit within the same platform without exposing administrative tasks to job seekers.", screen: 3 },
+      { title: "Provide an institutional oversight view", body: "The administrator dashboard supports operational review across the portal. Role separation is part of the product structure, not simply a different landing page for each audience.", screen: 5 }
+    ],
+    delivery: "Built for CCED at Universitas Lampung to support access to employment opportunities. The gallery documents the candidate, employer, and administrator interfaces rather than individual hiring outcomes."
+  },
+  justspeak: {
+    title: "Beyond a profile: content, learning, assessment.",
+    contribution: "Back-end development for a language institution's company and learning platform. The contribution includes content and resource workflows, quiz delivery, multiple question types, and assessment scoring logic.",
+    decisions: [
+      { title: "Connect the institution and its learning offer", body: "The public platform introduces the institution alongside its services and activities. Learning functionality belongs to the same product as its company profile and published content.", screen: 1 },
+      { title: "Treat assessment as more than a form", body: "The quiz interface is backed by different question types and scoring rules. That scoring work is a distinct part of the implementation, beyond presenting questions on a page.", screen: 2 },
+      { title: "Give assessment an administrative side", body: "Assessment management has a dedicated workspace alongside resources and analytics. The scope includes operating the learning content, not only taking a quiz.", screen: 6 }
+    ],
+    delivery: "A client platform for an English-language institution. Selected screens show the public platform, learning resources, quiz experience, and assessment administration."
+  },
+  '2watuju': {
+    title: "Let prospective clients explore the space.",
+    contribution: "Front-end development of the practice's company profile and project showcase. The work includes recommending and integrating Panolens-powered 360° views alongside the conventional project catalogue.",
+    decisions: [
+      { title: "Start with a readable project catalogue", body: "The catalogue gives visitors a conventional way to browse the practice's work before opening an individual home or interior project.", screen: 1 },
+      { title: "Give each project its own context", body: "Project detail pages sit between the catalogue and deeper spatial exploration. They let individual work be presented as more than a thumbnail in a grid.", screen: 3 },
+      { title: "Extend the showcase into 360°", body: "Panolens adds an interactive way to look around selected spaces. A screenshot records the interface; the spatial interaction itself is experienced on the project website.", screen: 4 }
+    ],
+    delivery: "A commissioned company profile and architectural showcase with 360° project exploration. The gallery provides still views; the linked website is the destination for the interactive experience."
+  }
+};
+
+// Explicit public-facing captions. Keep these aligned with each project's images.
+// Numbered source files use neutral labels until their individual screens are curated.
+const PROJECT_GALLERY_TITLES = {
+  sicater: ["The field-to-office ecosystem", "An overview of utility operations", "Revenue reporting", "Meter locations and field coverage", "Operational statistics on mobile", "NFC meter verification"],
+  magicpin: ["The collector platform on the web", "Park selection and map exploration", "Park maps on mobile", "A pin's collection details"],
+  worldofbooth: ["Entering the virtual city", "Exploring the city on foot", "Driving between locations", "The photobooth countdown", "Reviewing a photostrip", "The photo gallery"],
+  flamboys: ["The roasting team's mobile workspace", "Recording a roasting session", "Production analytics", "Inventory records", "Reviewing a roasting curve", "Roaster management"],
+  ubmstorage: ["The interactive catalogue concept", "A handheld-inspired browser experience", "The branded boot sequence", "Navigating the custom interface", "Exploring the product catalogue"],
+  digivass: ["The field team's mobile toolkit", "An overview of field operations", "Creating a survey", "Managing field teams", "Reviewing a survey record", "Validating incoming records"],
+  spekhp: ["The phone-specification platform", "Browsing the public website", "Finding a phone", "Comparing phone specifications", "The editorial workspace"],
+  justspeak: ["The institution's public platform", "The quiz experience", "Learning resources", "The administration workspace", "Learning analytics", "Assessment management"],
+  duzz: ["The analog camera concept", "The photo library", "The camera experience", "Choosing a film recipe", "The camera and editing studio"],
+  mental: ["The counselling platform", "Exploring counselling services", "Choosing a psychologist"],
+  '2watuju': ["The architectural project catalogue", "Introducing the practice", "An individual project", "Exploring a project in detail"],
+  examlent: ["The student entry page", "Joining an examination", "Entering the exam session", "Managing exam packages", "Reviewing a student's attempt", "Exam results and reporting"],
+  cced: ["The university careers platform", "The job seeker's workspace", "The employer's workspace", "A company profile", "The administrator's workspace"],
+  gamestation: ["The browser game station", "Choosing a game", "A view inside the game collection", "Another playable experience", "Exploring the game collection"],
+  navaraprofile: ["Company profile · screen 01", "Company profile · screen 02", "Company profile · screen 03", "Company profile · screen 04", "Company profile · screen 05", "Company profile · screen 06"],
+  navaraopening: ["Event invitation · screen 01", "Event invitation · screen 02", "Event invitation · screen 03", "Event invitation · screen 04", "Event invitation · screen 05", "Event invitation · screen 06"],
+  freelance: ["Freelancer workspace · screen 01", "Freelancer workspace · screen 02", "Freelancer workspace · screen 03", "Freelancer workspace · screen 04", "Freelancer workspace · screen 05", "Freelancer workspace · screen 06"],
+  wakaf: ["Public service information · screen 01", "Public service information · screen 02", "Public service information · screen 03"]
+};
+
+const WORKSTREAM_FILTERS = {
+  "Operational systems": "operations",
+  "Digital platforms": "platforms",
+  "Digital products": "platforms",
+  "Company platforms": "platforms",
+  "Immersive experiences": "immersive"
+};
+
 PROJECTS.forEach((project) => {
   Object.assign(project, PROJECT_DETAILS[project.id]);
+  project.caseStudy = PROJECT_CASE_STUDIES[project.id] || null;
+  project.gallery = project.images.map((src, index) => ({
+    src, title: PROJECT_GALLERY_TITLES[project.id][index]
+  }));
   project.filters = [...new Set([
     ...project.filters,
     project.kind === "Client work" ? "client" : "rd",
-    project.workstream === "Operational systems" ? "operations" : "platforms",
-    project.workstream === "Immersive experiences" ? "immersive" : ""
+    WORKSTREAM_FILTERS[project.workstream]
   ].filter(Boolean))];
 });
 

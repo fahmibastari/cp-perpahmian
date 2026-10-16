@@ -1,0 +1,186 @@
+/* Shared motion vocabulary; page-specific compositions. Layout overrides are explicitly scoped. */
+.page-reading-rail { position: fixed; z-index: 600; inset: 0 0 auto; height: 3px; background: var(--color-accent); transform: scaleX(var(--page-progress,0)); transform-origin: left; pointer-events: none; }
+.kinetic-word { display: inline-block; overflow: clip; vertical-align: top; padding: .06em .03em .13em; margin: -.06em -.03em -.13em; max-width: 100%; }
+.kinetic-word > span { display: inline-block; }
+.motion-allowed .kinetic-word > span { animation: word-unfold 800ms var(--ease-out) both; animation-delay: calc(var(--word-order) * 35ms); }
+@keyframes word-unfold { from { transform: translateY(110%) rotate(3deg); } to { transform: none; } }
+.site-menu__nav a { transition: transform 650ms var(--ease-out), opacity 450ms var(--ease-out); transition-delay: calc(var(--nav-order,0) * 35ms); }
+.site-menu:not(.is-open) .site-menu__nav a { transform: translateY(28px); opacity: 0; }
+.site-footer { position: relative; overflow: hidden; }
+.site-footer::before { content: ''; display: block; position: absolute; top: 0; left: var(--page-gutter); right: var(--page-gutter); height: 2px; background: var(--color-accent-dark); transform: scaleX(var(--footer-reveal,1)); transform-origin: left; }
+.site-footer__statement { position: relative; }
+
+/* Brand assembly: the supplied logo, cut into sixteen precisely rejoining tiles. */
+.brand-assembly { position: relative; display: grid; place-items: center; width: 100%; min-height: 16rem; isolation: isolate; overflow: clip; }
+.brand-assembly__mark { display: grid; grid-template-columns: repeat(4,1fr); grid-template-rows: repeat(4,1fr); width: 55%; max-width: 13rem; aspect-ratio: 178 / 146; }
+.brand-assembly__mark i { display: block; background-image: url('image/profile/Logo Icon.png'); background-size: 400% 400%; background-position: calc(var(--tile-x) * 100% / 3) calc(var(--tile-y) * 100% / 3); }
+.brand-assembly__guides { position: absolute; inset: 12% 16%; border: 1px solid var(--color-rule); transform: scale(calc(.8 + var(--assembly,1) * .2)); opacity: .55; z-index: -1; }
+.brand-assembly__guides::before, .brand-assembly__guides::after { content: ''; position: absolute; background: var(--color-rule); }
+.brand-assembly__guides::before { top: 50%; left: -12%; right: -12%; height: 1px; }
+.brand-assembly__guides::after { left: 50%; top: -12%; bottom: -12%; width: 1px; }
+.brand-assembly__caption, .brand-assembly__axis { position: absolute; bottom: 0; font-size: var(--text-xs); color: var(--color-muted); }
+.brand-assembly__caption { left: 0; }
+.brand-assembly__axis { right: 0; font-variant-numeric: tabular-nums; }
+.brand-assembly--home { margin-bottom: var(--space-xl); min-height: 15rem; }
+[data-page="home"] .studio-hero { align-items: center; padding-top: var(--space-xl); }
+[data-page="home"] .studio-hero__heading { align-self: center; }
+.capability-editorial article, .service-detail__row, .principle-list article { position: relative; }
+.capability-editorial article::before, .service-detail__row::before, .principle-list article::before { content: ''; position: absolute; top: -1px; left: 0; right: 0; height: 2px; background: var(--color-accent-dark); transform: scaleX(var(--row-reveal,1)); transform-origin: left; }
+
+/* Work: a scroll-translated contact sheet, followed by the complete usable index. */
+.archive-ribbon { background: var(--color-ink); color: var(--color-paper); margin-bottom: var(--space-3xl); padding-block: var(--space-xl); }
+.motion-pin .archive-ribbon { height: 230svh; padding-block: 0; }
+.archive-ribbon__pin { padding-block: var(--space-xl); }
+.motion-pin .archive-ribbon__pin { position: sticky; top: 6svh; height: 80svh; min-height: 580px; display: flex; flex-direction: column; justify-content: center; gap: var(--space-lg); }
+.archive-ribbon__heading { display: flex; justify-content: space-between; align-items: end; gap: var(--space-xl); margin-bottom: var(--space-lg); }
+.archive-ribbon__heading h2 { font-size: var(--type-section); margin-top: var(--space-sm); }
+.archive-ribbon__heading > p { max-width: 35ch; font-size: var(--text-sm); color: var(--color-rule); }
+.archive-ribbon__window { overflow-x: auto; }
+.motion-pin .archive-ribbon__window { overflow: clip; }
+.archive-ribbon__track { display: flex; width: max-content; gap: var(--space-lg); padding-inline: var(--page-gutter); }
+.archive-frame { display: block; flex: 0 0 clamp(16rem,32vw,29rem); width: clamp(16rem,32vw,29rem); }
+.archive-frame > div { aspect-ratio: 16 / 10; background: var(--color-media-dark); padding: var(--space-md); overflow: hidden; }
+.archive-frame img { width: 100%; height: 100%; object-fit: contain; }
+.archive-frame > span { display: flex; align-items: center; gap: var(--space-sm); padding-top: var(--space-md); }
+.archive-frame > span strong { font-size: var(--text-base); font-weight: 600; line-height: 1.4; }
+.archive-frame > span small { color: var(--color-accent); }
+.archive-frame > span svg { margin-left: auto; }
+.archive-frame > p { margin-top: var(--space-xs); font-size: var(--text-xs); color: var(--color-rule); }
+.archive-ribbon__bottom { display: flex; align-items: center; gap: var(--space-xl); width: 100%; margin-top: var(--space-lg); font-size: var(--text-xs); }
+.archive-ribbon__bottom a { display: inline-flex; align-items: center; gap: var(--space-sm); margin-left: auto; }
+.archive-ribbon__meter { height: 2px; flex: 1; background: var(--color-neutral); }
+.archive-ribbon__meter i { display: block; height: 100%; background: var(--color-accent); transform: scaleX(var(--ribbon-progress,1)); transform-origin: left; }
+.archive-filters { position: sticky; top: 0; z-index: 25; background: var(--color-paper); padding-block: var(--space-md); }
+.project-card__body { position: relative; }
+.project-card__body::after { content: ''; position: absolute; bottom: -12px; left: 0; right: 0; height: 1px; background: var(--color-rule); transform: scaleX(var(--card-rule,1)); transform-origin: left; }
+
+/* Services: a circuit of decisions, paired with its actual delivery steps. */
+.delivery-stage { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: var(--space-3xl); align-items: start; }
+.delivery-diagram { position: sticky; top: 18svh; background: var(--color-ink); color: var(--color-paper); padding: var(--space-xl); border-radius: var(--radius-sm); }
+.delivery-diagram svg { width: 100%; height: auto; margin-block: var(--space-lg); }
+.delivery-diagram__base { stroke: var(--color-neutral); stroke-width: 2; }
+.delivery-diagram__line { stroke: var(--color-accent); stroke-width: 3; stroke-dasharray: 1; stroke-dashoffset: 1; }
+.delivery-diagram svg rect { fill: var(--color-ink); stroke: var(--color-neutral); stroke-width: 2; transition: fill 300ms, stroke 300ms; }
+.delivery-diagram svg text { fill: var(--color-paper); font-family: var(--font-body); font-size: 12px; }
+.delivery-diagram svg .is-connected rect { fill: var(--color-accent); stroke: var(--color-accent); }
+.delivery-diagram svg .is-connected text { fill: var(--color-ink); }
+.delivery-diagram__current { font-family: var(--font-display); font-size: clamp(1.35rem, 2.3vw, 2rem); font-weight: 500; line-height: 1.3; letter-spacing: -.025em; }
+.delivery-stage .process-list { display: block; }
+.delivery-stage .process-list li { min-height: 38svh; align-content: center; position: relative; padding: var(--space-xl) 0; gap: var(--space-md); }
+.delivery-stage .process-list h3 { font-family: var(--font-display); font-weight: 600; font-size: var(--type-section); }
+.delivery-stage .process-list li::before { content: ''; position: absolute; top: 0; left: 0; width: 3rem; height: 3px; background: var(--color-accent-dark); transform: scaleX(0); transform-origin: left; transition: transform 400ms var(--ease-out); }
+.delivery-stage .process-list li.is-current-step::before { transform: scaleX(1); }
+
+/* About: assembly, reading emphasis, then four editorial principles. */
+[data-page="about"] .about-mark { display: block; width: 100%; max-width: none; border: 0; background: transparent; overflow: visible; }
+.brand-assembly--about { height: 100%; min-height: 22rem; }
+.brand-assembly--about .brand-assembly__mark { width: 62%; }
+.about-story__lead { background: linear-gradient(to right, var(--color-ink) var(--reading-fill,100%), var(--color-neutral) var(--reading-fill,100%)); background-clip: text; -webkit-background-clip: text; color: transparent; }
+[data-page="about"] .principles { display: grid; grid-template-columns: minmax(0,.85fr) minmax(0,1.15fr); gap: var(--space-3xl); align-items: start; }
+[data-page="about"] .principles .section-heading { display: block; position: sticky; top: 15svh; margin: 0; }
+[data-page="about"] .principles .section-heading p { margin-top: var(--space-lg); }
+[data-page="about"] .principle-list { grid-template-columns: minmax(0,1fr); gap: 0; }
+[data-page="about"] .principle-list article { padding-block: var(--space-xl); min-height: 26svh; align-content: center; }
+[data-page="about"] .principle-list article::after { content: attr(data-motion-number); position: absolute; top: var(--space-sm); right: 0; font-size: var(--text-xs); color: var(--color-muted); }
+
+/* Case studies: chapter tracking plus a cinematic, keyboard-accessible image viewer. */
+.case-chapter-marker { margin-top: var(--space-xl); }
+.case-chapter-marker > span { display: block; font-family: var(--font-display); font-size: clamp(4rem,8vw,7rem); font-weight: 500; letter-spacing: -.05em; font-variant-numeric: tabular-nums; line-height: 1; color: var(--color-accent-dark); }
+.case-chapter-marker > div { display: flex; gap: var(--space-xs); max-width: 14rem; margin-block: var(--space-lg); }
+.case-chapter-marker i { flex: 1; height: 3px; background: var(--color-rule); }
+.case-chapter-marker i.is-read { background: var(--color-accent-dark); }
+.case-chapter-marker p { font-size: var(--text-sm); }
+.gallery-heading { grid-column: 1 / -1; display: flex; align-items: end; justify-content: space-between; gap: var(--space-xl); padding-block: var(--space-xl); }
+.gallery-heading h2 { font-size: var(--type-section); }
+.gallery-heading p { font-size: var(--text-sm); color: var(--color-muted); }
+.project-gallery__media { transform-origin: center bottom; }
+.project-gallery figure figcaption { border-top: 1px solid var(--color-rule); margin-top: var(--space-sm); }
+.product-viewer { position: fixed; inset: 0; width: 100vw; height: 100dvh; max-width: none; max-height: none; margin: 0; border: 0; background: var(--color-ink); color: var(--color-paper); padding: var(--space-lg) var(--page-gutter); }
+.product-viewer[open] { display: grid; grid-template-rows: auto minmax(0,1fr) auto; gap: var(--space-lg); }
+.product-viewer::backdrop { background: var(--color-ink); }
+.product-viewer__top, .product-viewer__bottom { display: flex; justify-content: space-between; align-items: center; gap: var(--space-md); }
+.product-viewer__top p { font-size: var(--text-sm); }
+.product-viewer button { color: var(--color-paper); border: 1px solid var(--color-neutral); background: transparent; border-radius: var(--radius-pill); padding: var(--space-sm) var(--space-lg); cursor: pointer; min-height: 44px; white-space: nowrap; }
+.product-viewer__canvas { display: grid; place-items: center; min-height: 0; overflow: hidden; }
+.product-viewer__canvas img { width: 100%; height: 100%; min-height: 0; object-fit: contain; }
+.viewer-open { overflow: hidden; }
+
+/* Contact: a live local-only draft circuit. Sending remains owned by the existing form. */
+.contact-signal { margin-top: var(--space-xl); padding-top: var(--space-lg); border-top: 1px solid var(--color-rule); }
+.contact-signal__heading, .contact-signal__labels { display: flex; justify-content: space-between; align-items: center; gap: var(--space-sm); font-size: var(--text-xs); }
+.contact-signal svg { display: block; width: 100%; max-height: 170px; margin-block: var(--space-sm); }
+.contact-signal__base { stroke: var(--color-rule); stroke-width: 2; }
+.contact-signal__line { stroke: var(--color-accent-dark); stroke-width: 3; stroke-dasharray: 1; stroke-dashoffset: calc(1 - var(--draft-progress,0)); transition: stroke-dashoffset 650ms var(--ease-out); }
+.contact-signal svg rect { fill: var(--color-paper); stroke: var(--color-rule); stroke-width: 2; transition: fill 350ms; }
+.contact-signal svg rect.is-filled { fill: var(--color-accent); stroke: var(--color-accent-dark); }
+.contact-signal > p { margin-top: var(--space-lg); font-size: var(--text-xs); color: var(--color-muted); }
+.contact-form .field { position: relative; border-left: 2px solid transparent; padding-left: var(--space-md); transition: border-color 300ms; }
+.contact-form .field:focus-within { border-left-color: var(--color-accent-dark); }
+.contact-form .field:focus-within label { color: var(--color-accent-dark); }
+
+/* Privacy and recovery retain a quiet, task-appropriate motion treatment. */
+.privacy-index { display: flex; gap: var(--space-lg); flex-wrap: wrap; padding-block: var(--space-lg); border-block: 1px solid var(--color-rule); }
+.privacy-index a { display: flex; align-items: center; gap: var(--space-sm); font-size: var(--text-sm); padding-block: var(--space-xs); border-bottom: 2px solid transparent; }
+.privacy-index a[aria-current] { border-color: var(--color-accent-dark); }
+.privacy-index span { color: var(--color-muted); font-size: var(--text-xs); }
+.legal-copy article { scroll-margin-top: var(--space-xl); }
+.brand-assembly--missing { max-width: 24rem; min-height: 14rem; margin-bottom: var(--space-xl); }
+@media (max-width: 59.99rem) {
+  .delivery-stage { gap: var(--space-xl); }
+  .delivery-diagram { padding: var(--space-lg); }
+  [data-page="about"] .principles { gap: var(--space-xl); }
+  .archive-ribbon__heading > p { display: none; }
+  .archive-ribbon__bottom { gap: var(--space-md); }
+}
+@media (max-width: 39.99rem) {
+  .brand-assembly--home { min-height: 11rem; margin-bottom: var(--space-lg); }
+  .brand-assembly__mark { max-width: 8rem; }
+  [data-page="home"] .studio-hero__aside { width: 100%; }
+  .archive-ribbon__heading h2 { font-size: var(--type-section); }
+  .motion-pin .archive-ribbon__pin { min-height: 0; gap: var(--space-md); }
+  .archive-ribbon__heading { margin-bottom: var(--space-sm); }
+  .archive-ribbon__bottom { flex-wrap: wrap; }
+  .archive-ribbon__bottom > span { display: none; }
+  .archive-ribbon__meter { flex-basis: 100%; }
+  .archive-ribbon__bottom a { margin-left: 0; }
+  .archive-frame { width: 76vw; flex-basis: 76vw; }
+  .archive-filters { position: static; }
+  .delivery-stage { grid-template-columns: minmax(0,1fr); gap: var(--space-xl); }
+  .delivery-diagram { position: sticky; top: 0; z-index: 15; display: grid; grid-template-columns: 1fr 1fr; align-items: center; padding: var(--space-md); }
+  .delivery-diagram > .studio-label { display: none; }
+  .delivery-diagram svg { height: 21svh; width: 100%; margin: 0; }
+  .delivery-diagram__current { font-size: 1.25rem; text-align: right; }
+  .delivery-stage .process-list li { min-height: 36svh; scroll-margin-top: 26svh; }
+  [data-page="about"] .about-mark { grid-column: 1; grid-row: 2; max-height: 14rem; aspect-ratio: auto; }
+  .brand-assembly--about { min-height: 14rem; }
+  [data-page="about"] .principles { grid-template-columns: minmax(0,1fr); }
+  [data-page="about"] .principles .section-heading { position: static; }
+  [data-page="about"] .principle-list article { min-height: 0; }
+  .case-chapter-marker { display: flex; align-items: center; gap: var(--space-lg); }
+  .case-chapter-marker > span { font-size: 4rem; }
+  .case-chapter-marker > div { width: 6rem; }
+  .case-chapter-marker > p { display: none; }
+  .gallery-heading { display: block; }
+  .gallery-heading p { margin-top: var(--space-md); }
+  .product-viewer { padding: var(--space-md); }
+  .product-viewer__top { align-items: start; }
+  .product-viewer__top p { font-size: var(--text-xs); }
+  .product-viewer button { padding-inline: var(--space-md); font-size: var(--text-sm); }
+  .product-viewer__bottom { font-size: var(--text-xs); }
+  .contact-signal { margin-top: var(--space-lg); }
+  .privacy-index { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-sm); }
+}
+@media (max-height: 659px), (prefers-reduced-motion: reduce) {
+  .delivery-diagram { position: static; }
+  .delivery-stage .process-list li { min-height: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .kinetic-word > span { animation: none !important; }
+  .site-footer__statement, .service-proof, .principle-list article, .project-gallery__media { transform: none !important; }
+  .brand-assembly__mark i { transform: none !important; opacity: 1 !important; }
+  .archive-ribbon__window { overflow-x: auto; }
+  .site-menu__nav a, .delivery-diagram svg rect, .contact-signal__line, .contact-signal svg rect, .contact-form .field, .delivery-stage .process-list li::before { transition: none; }
+}
+@media (forced-colors: active) {
+  .about-story__lead { color: CanvasText; background: none; }
+}

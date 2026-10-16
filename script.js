@@ -24,6 +24,9 @@ function headerMarkup(currentPage) {
         <a class="site-logo" href="index.html" aria-label="perpahmian.tech home">
           <img src="image/profile/Logo Icon Text Horizontal.png" width="998" height="146" alt="perpahmian.tech — Build What Matters.">
         </a>
+        <nav class="desktop-nav" aria-label="Primary navigation">
+          ${SITE_LINKS.filter(([id]) => id !== "home").map(([id, label, href]) => `<a href="${href}"${id === currentPage ? ' aria-current="page"' : ""}>${label}${id === "contact" ? ICON_ARROW_UP_RIGHT : ""}</a>`).join("")}
+        </nav>
         <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-menu">
           <span>Menu</span><span class="menu-toggle__mark" aria-hidden="true"></span>
         </button>
@@ -46,7 +49,7 @@ function footerMarkup() {
   return `
     <footer class="site-footer">
       <div class="site-footer__inner">
-        <p class="site-footer__statement">Have a difficult product problem? <span>Let’s make it workable.</span></p>
+        <p class="site-footer__statement">Something worth<br>building? <span>Let’s talk.</span></p>
         <a class="text-link site-footer__action" href="contact.html">Start a conversation ${ICON_ARROW_RIGHT}</a>
         <div class="site-footer__meta">
           <span>© 2026 perpahmian.tech · Indonesia</span>
@@ -418,14 +421,14 @@ function renderProjectGrid() {
     <section class="work-group" data-work-group="client" aria-labelledby="client-work-title">
       <header class="work-group__heading">
         <div><p>Commissioned products</p><h2 id="client-work-title">Client work</h2></div>
-        <span>${clientProjects.length} projects</span>
+        <span data-group-count>${clientProjects.length} projects</span>
       </header>
       <div class="project-grid__inner">${clientProjects.map((project) => projectCard(project)).join("")}</div>
     </section>
     <section class="work-group" data-work-group="rd" aria-labelledby="research-title">
       <header class="work-group__heading">
         <div><p>Self-initiated exploration</p><h2 id="research-title">Independent R&D</h2></div>
-        <span>${researchProjects.length} projects</span>
+        <span data-group-count>${researchProjects.length} projects</span>
       </header>
       <div class="project-grid__inner">${researchProjects.map((project) => projectCard(project)).join("")}</div>
     </section>`;
@@ -455,6 +458,7 @@ function renderProjectGrid() {
       const matchedCards = cards.filter(matchesFilter);
       const leavingCards = cards.filter((card) => !card.classList.contains("is-hidden") && !matchesFilter(card));
       const enteringCards = cards.filter((card) => card.classList.contains("is-hidden") && matchesFilter(card));
+      const previousPositions = new Map(cards.filter(card => !card.classList.contains('is-hidden')).map(card => [card, card.getBoundingClientRect()]));
 
       if (!reduceMotion.matches && leavingCards.length) {
         const exits = leavingCards.map((card, index) => card.animate([
@@ -470,17 +474,23 @@ function renderProjectGrid() {
       cards.forEach((card) => card.classList.toggle("is-hidden", !matchesFilter(card)));
 
       grid.querySelectorAll("[data-work-group]").forEach((group) => {
-        const hasVisibleCards = [...group.querySelectorAll(".project-card")].some(matchesFilter);
-        group.classList.toggle("is-hidden", !hasVisibleCards);
+        const visibleCount = [...group.querySelectorAll(".project-card")].filter(matchesFilter).length;
+        group.classList.toggle("is-hidden", visibleCount === 0);
+        group.querySelector('[data-group-count]').textContent = `${visibleCount} ${visibleCount === 1 ? 'project' : 'projects'}`;
       });
 
       if (!reduceMotion.matches) {
+        const reflows = matchedCards.filter(card => previousPositions.has(card)).map(card => {
+          const before = previousPositions.get(card);
+          const after = card.getBoundingClientRect();
+          return card.animate([{transform:`translate(${before.left-after.left}px, ${before.top-after.top}px)`},{transform:'none'}], {duration:650,easing:'cubic-bezier(.16,1,.3,1)'});
+        });
         const entrances = enteringCards.map((card, index) => card.animate([
           { opacity: 0, transform: "translateY(10px)" },
           { opacity: 1, transform: "translateY(0)" }
         ], { duration: 260, delay: Math.min(index * 32, 192), easing: "cubic-bezier(.16, 1, .3, 1)" }));
-        runningFilterAnimations = entrances;
-        Promise.all(entrances.map((animation) => animation.finished.catch(() => {}))).then(() => {
+        runningFilterAnimations = [...reflows, ...entrances];
+        Promise.all(runningFilterAnimations.map((animation) => animation.finished.catch(() => {}))).then(() => {
           if (currentRun === filterRun) runningFilterAnimations = [];
         });
       }
@@ -559,17 +569,38 @@ function renderProjectDetail() {
   const projectIndex = PROJECTS.findIndex((item) => item.id === project.id);
   const next = PROJECTS[(projectIndex + 1) % PROJECTS.length];
   const externalLink = project.url
-    ? `<a class="button button--ink" href="${project.url}" target="_blank" rel="noreferrer">Visit live project ${ICON_ARROW_UP_RIGHT}</a>`
-    : "";
+    ? `<div class="case-public-links${project.publicLinks?.length ? ' case-public-links--stores' : ''}" role="group" aria-label="External project links">
+        <a class="button button--ink" href="${project.url}" target="_blank" rel="noopener noreferrer" aria-label="${project.linkLabel || 'Visit project website'} (opens in a new tab)">${project.linkLabel || 'Visit project website'} ${ICON_ARROW_UP_RIGHT}</a>
+        ${(project.publicLinks || []).map(link => `<a class="text-link case-store-link" href="${link.url}" target="_blank" rel="noopener noreferrer" aria-label="${project.name} on ${link.label} for ${link.platform} (opens in a new tab)">${link.label} ${ICON_ARROW_UP_RIGHT}</a>`).join('')}
+      </div>${project.linkNote ? `<p class="case-link-note">${project.linkNote}</p>` : ''}`
+    : `<p class="case-link-note">${project.kind === 'Client work' ? 'Project screens are documented below. No public application link is shared in this case study.' : 'Explore the documented product screens below.'}</p>`;
 
-  const gallery = project.images.map((image, index) => {
-    const filename = decodeURIComponent(image.split("/").pop()).replace(/\.[^.]+$/, "").replace(/[-_]+/g, " ").replace(/\s+/g, " ").trim();
+  const gallery = project.gallery.map(({src: image, title}, index) => {
     return `
-    <figure>
-      <img src="${image}" width="1600" height="1200" loading="lazy" alt="${project.name} interface view ${index + 1}">
-      <figcaption>View ${String(index + 1).padStart(2, "0")} · ${filename}</figcaption>
+    <figure id="project-screen-${index + 1}" tabindex="-1">
+      <a class="project-gallery__media" href="${image}" target="_blank" rel="noopener" aria-label="Open ${project.name}: ${title} (new tab)"><img src="${image}" width="1600" height="1200" loading="lazy" alt="${project.name} — ${title}"></a>
+      <figcaption><span class="gallery-view-number">${String(index + 1).padStart(2, "0")}</span> ${title}</figcaption>
     </figure>`;
   }).join("");
+
+  const study = project.caseStudy;
+  const implementation = study ? `
+    <section class="case-implementation page-shell" aria-labelledby="implementation-title">
+      <div class="case-implementation__heading">
+        <p class="eyebrow">Inside the build</p>
+        <h2 id="implementation-title">The work, in detail.</h2>
+        <p>Three implementation details, with the corresponding product screens.</p>
+      </div>
+      <ol class="case-decisions">
+        ${study.decisions.map((decision, index) => `
+          <li>
+            <span class="case-decision-number" aria-hidden="true">${String(index + 1).padStart(2, '0')}</span>
+            <div><h3>${decision.title}</h3><p>${decision.body}</p>
+              <a class="text-link" href="#project-screen-${decision.screen}" aria-label="View screen ${decision.screen}: ${project.gallery[decision.screen - 1].title}">View screen ${String(decision.screen).padStart(2, '0')} ${ICON_ARROW_RIGHT}</a>
+            </div>
+          </li>`).join('')}
+      </ol>
+    </section>` : '';
 
   target.innerHTML = `
     <section class="case-hero page-shell">
@@ -597,17 +628,18 @@ function renderProjectDetail() {
     <section class="case-story page-shell">
       <div class="case-story__intro">
         <p class="eyebrow">Case study</p>
-        <h2>From operating context to working product.</h2>
+        <h2>${study ? study.title : 'From operating context to working product.'}</h2>
       </div>
       <div class="case-story__body case-narrative">
         <article><span>01</span><h3>Context</h3><p>${project.context || project.summary}</p></article>
         <article><span>02</span><h3>Challenge</h3><p>${project.challenge || project.summary}</p></article>
-        <article><span>03</span><h3>Response</h3><p>${project.response || project.description}</p></article>
-        <article><span>04</span><h3>Shipped outcome</h3><p>${project.outcome || project.description}</p></article>
+        <article><span>03</span><h3>${study ? 'Our contribution' : 'Response'}</h3><p>${study ? study.contribution : project.response || project.description}</p></article>
+        <article><span>04</span><h3>${project.kind === 'Independent R&D' ? 'What the experiment demonstrates' : 'What was built'}</h3><p>${project.outcome || project.description}</p></article>
       </div>
     </section>
-    <section class="case-evidence page-shell" aria-label="Project evidence and technology">
-      <div><span>Delivery evidence</span><strong>${project.proof}</strong></div>
+    ${implementation}
+    <section class="case-evidence page-shell" aria-label="Delivery context and technology">
+      <div><span>Delivery context</span><strong>${project.proof}</strong>${study ? `<p class="case-delivery-note">${study.delivery}</p>` : ''}</div>
       <div><span>Product scope</span><strong>${project.workstream}</strong></div>
       <div><span>Technology</span><ul class="tech-list" aria-label="Technology used">${project.tech.map((tech) => `<li>${tech}</li>`).join("")}</ul></div>
     </section>
@@ -618,95 +650,6 @@ function renderProjectDetail() {
     </section>`;
 }
 
-function setupContactForm() {
-  const form = document.querySelector("[data-contact-form]");
-  if (!form) return;
-
-  const submit = form.querySelector("button[type='submit']");
-  const status = form.querySelector("[data-form-status]");
-  const defaultStatus = status?.textContent || "";
-  const requiredFields = [...form.querySelectorAll("[aria-required='true']")];
-
-  function validateField(field) {
-    const wrapper = field.closest(".field");
-    const helper = wrapper.querySelector(".field__help");
-    const original = helper.dataset.original || helper.textContent;
-    helper.dataset.original = original;
-    let error = "";
-
-    if (!field.value.trim()) {
-      error = `${field.labels[0].textContent.replace("*", "").trim()} is missing. Add it before sending the enquiry.`;
-    } else if (field.type === "email" && !/^\S+@\S+\.\S+$/.test(field.value.trim())) {
-      error = "That email address is incomplete. Use a format like name@company.com.";
-    }
-
-    const invalid = Boolean(error);
-    field.setAttribute("aria-invalid", String(invalid));
-    wrapper.dataset.state = invalid ? "error" : "success";
-    helper.textContent = invalid ? error : original;
-    return !invalid;
-  }
-
-  requiredFields.forEach((field) => {
-    field.addEventListener("blur", () => {
-      field.dataset.touched = "true";
-      validateField(field);
-    });
-
-    field.addEventListener("input", () => {
-      if (field.dataset.touched === "true") validateField(field);
-    });
-  });
-
-  form.addEventListener("submit", async (event) => {
-    event.preventDefault();
-    const valid = requiredFields.map((field) => {
-      field.dataset.touched = "true";
-      return validateField(field);
-    }).every(Boolean);
-
-    if (!valid) {
-      const firstInvalid = form.querySelector('[aria-invalid="true"]');
-      firstInvalid?.focus();
-      submit.dataset.state = "error";
-      submit.querySelector("span:first-child").textContent = "Review required fields";
-      return;
-    }
-
-    submit.dataset.state = "loading";
-    submit.disabled = true;
-    submit.querySelector("span:first-child").textContent = "Sending enquiry";
-    if (status) status.textContent = "Sending your message securely…";
-
-    try {
-      const response = await fetch(form.action, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", "Accept": "application/json" },
-        body: JSON.stringify(Object.fromEntries(new FormData(form)))
-      });
-      const result = await response.json().catch(() => ({}));
-      if (!response.ok) throw new Error(result.error || "The message could not be sent.");
-
-      submit.dataset.state = "success";
-      submit.querySelector("span:first-child").textContent = "Enquiry sent";
-      if (status) status.textContent = "Thank you. Your enquiry has reached perpahmian.tech and we will reply by email.";
-      form.reset();
-      form.querySelectorAll(".field").forEach((field) => delete field.dataset.state);
-    } catch (error) {
-      submit.dataset.state = "error";
-      submit.querySelector("span:first-child").textContent = "Try sending again";
-      if (status) status.innerHTML = `${error.message} You can also email <a href="mailto:perpahmian.tech@gmail.com">perpahmian.tech@gmail.com</a>.`;
-    } finally {
-      submit.disabled = false;
-      window.setTimeout(() => {
-        if (submit.dataset.state !== "success") {
-          submit.querySelector("span:first-child").textContent = "Send project enquiry";
-          if (status && submit.dataset.state !== "error") status.textContent = defaultStatus;
-        }
-      }, 5000);
-    }
-  });
-}
 
 function setupServiceScroll() {
   const root = document.querySelector("[data-service-scroll]");
@@ -815,6 +758,4 @@ renderFeaturedProjects();
 setupFeaturedScroll();
 renderProjectGrid();
 renderProjectDetail();
-setupContactForm();
-setupServiceScroll();
-setupPageTransitions();
+document.body.classList.add("is-page-ready");

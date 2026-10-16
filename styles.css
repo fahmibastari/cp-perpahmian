@@ -1,12 +1,12 @@
 /* Hallmark · pre-emit critique: P5 H5 E4 S5 R5 V5
  * Hallmark · genre: modern-minimal · macrostructure: Split Studio (Work: Portfolio Grid) · H2 Split Diptych
  * theme: custom · vibe: "technical restraint, accountable, quietly exact" · paper: oklch(98% 0.008 132) · accent: oklch(80% 0.14 132)
- * display: Bricolage Grotesque · body: IBM Plex Sans · axes: light / geometric-sans / chromatic-green ~132°
+ * typography: Manrope 400/500/600/700; current route calibration lives in studio.css
  * enrichment: real project screenshots · nav: N9 Edge-aligned + menu · footer: Ft5 Statement
  * motion: hero-settle · deliberate-hover · studied: no · context: inferred · v1.1.0
  * contrast: pass (40–41) · slop: pass (42–49) · mobile: pass (34, 49–57) · icons: pass (30)
  */
-@import url("tokens.css");
+@import url("tokens.css?v=20261014-type1");
 
 *,
 *::before,
@@ -1460,7 +1460,7 @@ ol {
 
 @media (hover: hover) and (pointer: fine) {
   .menu-toggle:hover,
-  .filter:hover {
+  .filter:not(.is-active):not([data-state="success"]):hover {
     background: var(--color-paper-2);
   }
 

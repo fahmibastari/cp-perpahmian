@@ -1,14 +1,14 @@
 :root {
-  --color-paper: oklch(98% 0.008 132);
+  --color-paper: #ffffff;
   --color-paper-2: oklch(95% 0.014 132);
   --color-paper-3: oklch(91% 0.018 132);
-  --color-ink: oklch(18% 0.012 132);
+  --color-ink: #111111;
   --color-ink-2: oklch(32% 0.014 132);
   --color-neutral: oklch(47% 0.012 132);
   --color-muted: oklch(39% 0.012 132);
   --color-rule: oklch(82% 0.016 132);
   --color-rule-2: oklch(89% 0.014 132);
-  --color-accent: oklch(80% 0.14 132);
+  --color-accent: #8BCF6A;
   --color-accent-dark: oklch(43% 0.13 132);
   --color-accent-ink: oklch(18% 0.012 132);
   --color-focus: oklch(53% 0.19 132);
@@ -16,9 +16,15 @@
   --color-error-soft: oklch(95% 0.025 28);
   --color-success: oklch(45% 0.13 142);
 
-  --font-display: "Bricolage Grotesque", "Trebuchet MS", sans-serif;
-  --font-body: "IBM Plex Sans", "Segoe UI", sans-serif;
+  --font-display: "Manrope", "Segoe UI", sans-serif;
+  --font-body: "Manrope", "Segoe UI", sans-serif;
   --font-mono: var(--font-body);
+  --weight-display: 600;
+  --type-hero: clamp(2.6rem, 5.5vw, 5.5rem);
+  --type-page: clamp(2.4rem, 4.6vw, 4.75rem);
+  --type-section: clamp(1.85rem, 3vw, 3.1rem);
+  --type-feature: clamp(1.85rem, 3.3vw, 3.5rem);
+  --type-statement: clamp(2.25rem, 4.5vw, 4.75rem);
 
   --space-3xs: 0.125rem;
   --space-2xs: 0.25rem;
@@ -31,8 +37,8 @@
   --space-3xl: 6rem;
   --space-4xl: 9rem;
 
-  --text-xs: 0.72rem;
-  --text-sm: 0.84rem;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
   --text-base: 1rem;
   --text-md: 1.25rem;
   --text-lg: 1.5625rem;
@@ -40,8 +46,8 @@
   --text-2xl: 2.4414rem;
   --text-3xl: 3.0518rem;
   --text-4xl: 3.8147rem;
-  --text-display-s: clamp(2.7rem, 6.5vw, 4.75rem);
-  --text-display: clamp(3.15rem, 7.4vw, 5.45rem);
+  --text-display-s: var(--type-page);
+  --text-display: var(--type-hero);
 
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
@@ -49,6 +55,9 @@
   --dur-micro: 120ms;
   --dur-short: 220ms;
   --dur-long: 420ms;
+  --dur-editorial: 850ms;
+  --color-media-dark: oklch(23% 0.012 132);
+  --color-media-light: oklch(92% 0.012 132);
 
   --rule-hair: 1px;
   --rule-strong: 2px;
@@ -59,7 +68,7 @@
   --radius-pill: 999px;
 
   --page-gutter: clamp(1rem, 4vw, 4.5rem);
-  --content-max: 92rem;
+  --content-max: 100rem;
   --reading-max: 65ch;
 
   --z-base: 1;

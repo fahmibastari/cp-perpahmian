@@ -14,8 +14,14 @@
   <link rel="icon" href="image/profile/Logo Icon.png">
   <link rel="apple-touch-icon" href="image/profile/Logo Icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20260829f"><script src="script.js?v=20260829f" defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=20261015-edit1">
+  <link rel="stylesheet" href="studio.css?v=20261016-links1"><script src="script.js?v=20261016-contact1" defer></script><script src="studio.js?v=20261014f" defer></script>
+  <script type="module" src="contact-form.mjs?v=20261016-contact1"></script>
+  <link rel="stylesheet" href="experience.css?v=20261014-type1">
+  <script src="experience.js?v=20261015-edit1" defer></script>
+  <link rel="stylesheet" href="motion-intent.css?v=20261014-intent1">
+  <script src="motion-intent.js?v=20261014-intent1" defer></script>
 </head>
 <body data-page="contact">
   <a class="skip-link" href="#main">Skip to content</a><div data-site-header></div>
@@ -40,26 +46,28 @@
         </div>
         <div class="field">
           <label for="name">Your name <span aria-hidden="true">*</span></label>
-          <input id="name" name="name" type="text" autocomplete="name" aria-required="true" aria-describedby="name-help">
+          <input id="name" name="name" type="text" autocomplete="name" required maxlength="120" aria-required="true" aria-describedby="name-help">
           <p class="field__help" id="name-help">Who should we address?</p>
         </div>
         <div class="field">
           <label for="email">Work email <span aria-hidden="true">*</span></label>
-          <input id="email" name="email" type="email" autocomplete="email" inputmode="email" aria-required="true" aria-describedby="email-help" placeholder="name@company.com">
+          <input id="email" name="email" type="email" autocomplete="email" inputmode="email" required maxlength="254" aria-required="true" aria-describedby="email-help" placeholder="name@company.com">
           <p class="field__help" id="email-help">We will reply to this address.</p>
         </div>
         <div class="field">
           <label for="company">Company or organisation</label>
-          <input id="company" name="company" type="text" autocomplete="organization" aria-describedby="company-help">
+          <input id="company" name="company" type="text" autocomplete="organization" maxlength="160" aria-describedby="company-help">
           <p class="field__help" id="company-help">Optional.</p>
         </div>
         <div class="field">
           <label for="brief">What needs to work? <span aria-hidden="true">*</span></label>
-          <textarea id="brief" name="brief" rows="6" aria-required="true" aria-describedby="brief-help"></textarea>
-          <p class="field__help" id="brief-help">A few sentences about the problem and desired outcome.</p>
+          <textarea id="brief" name="brief" rows="6" required maxlength="5000" aria-required="true" aria-describedby="brief-help"></textarea>
+          <p class="field__help" id="brief-help">A few sentences about the problem and desired outcome. Up to 5,000 characters.</p>
         </div>
         <button class="button button--ink form-submit" type="submit"><span>Send project enquiry</span><svg class="ui-arrow" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-        <p class="form-note" data-form-status aria-live="polite">Your message is sent securely to perpahmian.tech. We usually continue the conversation by email.</p>
+        <p class="form-note" data-form-status role="status" aria-live="polite" aria-atomic="true">Your message is sent securely to perpahmian.tech. We usually continue the conversation by email.</p>
+        <p class="form-note">Please avoid passwords or sensitive records. <a href="privacy.html">How we handle your enquiry</a>.</p>
+        <noscript><p>Please enable JavaScript to use this form, or email <a href="mailto:perpahmian.tech@gmail.com">perpahmian.tech@gmail.com</a> directly.</p><style>.form-submit { display: none; }</style></noscript>
       </form>
     </section>
   </main>
