@@ -12,12 +12,12 @@
   <meta property="og:title" content="perpahmian.tech — Custom software built around real work.">
   <meta property="og:description" content="Operational systems, digital platforms, and immersive experiences engineered from Indonesia.">
   <meta property="og:url" content="https://cp-perpahmian.vercel.app/">
-  <meta property="og:image" content="https://cp-perpahmian.vercel.app/image/sicater/Thumbnail-Sicater.png">
-  <meta property="og:image:alt" content="SiCater operational product interface by perpahmian.tech">
+  <meta property="og:image" content="https://cp-perpahmian.vercel.app/image/merbaoe/screencapture-merbaoe-vercel-app-cashier-2026-09-05-22_36_22%201.png">
+  <meta property="og:image:alt" content="Kopi Merbaoe cashier interface shown with sandbox demonstration data">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="perpahmian.tech — Custom software built around real work.">
   <meta name="twitter:description" content="Operational systems, digital platforms, and immersive experiences engineered from Indonesia.">
-  <meta name="twitter:image" content="https://cp-perpahmian.vercel.app/image/sicater/Thumbnail-Sicater.png">
+  <meta name="twitter:image" content="https://cp-perpahmian.vercel.app/image/merbaoe/screencapture-merbaoe-vercel-app-cashier-2026-09-05-22_36_22%201.png">
   <meta name="author" content="perpahmian.tech">
   <title>perpahmian.tech — Build What Matters.</title>
   <link rel="icon" href="image/profile/Logo Icon.png">
@@ -26,10 +26,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css?v=20261015-edit1">
-  <link rel="stylesheet" href="studio.css?v=20261016-links1">
-  <link rel="stylesheet" href="motion-home.css?v=20261014-type1">
-  <script src="projects.js?v=20261016-links1" defer></script>
-  <script src="script.js?v=20261016-links1" defer></script><script src="motion-home.js?v=20261014c" defer></script><script src="studio.js?v=20261014f" defer></script>
+  <link rel="stylesheet" href="studio.css?v=20261018-proportions2">
+  <script src="projects.js?v=20261018-proportions2" defer></script>
+  <script src="script.js?v=20261018-proportions2" defer></script><script src="studio.js?v=20261018-proportions2" defer></script>
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -45,9 +44,11 @@
     }
   </script>
   <link rel="stylesheet" href="experience.css?v=20261014-type1">
-  <script src="experience.js?v=20261015-edit1" defer></script>
+  <script src="experience.js?v=20261018-proportions2" defer></script>
   <link rel="stylesheet" href="motion-intent.css?v=20261014-intent1">
   <script src="motion-intent.js?v=20261014-intent1" defer></script>
+  <link rel="stylesheet" href="revamp.css?v=20261018-proportions2">
+  <script src="revamp.js?v=20261018-proportions2" defer></script>
 </head>
 <body data-page="home">
   <a class="skip-link" href="#main">Skip to content</a>
@@ -55,82 +56,76 @@
 
 
   <main id="main">
-    <section class="studio-hero page-shell">
+    <section class="studio-hero page-shell" aria-labelledby="home-title">
       <div class="studio-hero__heading">
-        <p class="studio-label">Independent product engineering · Indonesia</p>
-        <h1>Software for the<br>way you work.</h1>
+        <h1 id="home-title">Software for<br>real operations.</h1>
       </div>
       <div class="studio-hero__aside">
-        <p>We design and build operational systems, digital platforms, and interactive experiences. From the first question to the working product.</p>
-        <a class="text-link" href="work.html">Explore our work <svg class="ui-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></a>
+        <p>An independent engineering studio in Indonesia, building operational systems, web platforms, and mobile products.</p>
       </div>
-    </section>
-
-    <section class="showcase page-shell" aria-label="Featured project">
-      <div class="showcase__stage" data-showcase-stage>
-        <div class="showcase__copy">
-          <p class="studio-label" data-showcase-category>Production app · International client</p>
-          <h2 data-showcase-title>Magic Pin</h2>
-          <p data-showcase-description>A collector community connected across the web and production iOS and Android apps.</p>
-          <a class="text-link" href="project.html?id=magicpin" data-showcase-link>Explore Magic Pin <svg class="ui-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></a>
+      <a class="studio-hero__action" href="contact.html">Discuss a product <svg class="ui-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></a>
+      <div class="merbaoe-feature" aria-labelledby="merbaoe-title">
+        <div class="merbaoe-feature__heading">
+          <div><h2 id="merbaoe-title"><a href="project.html?id=merbaoe" aria-label="Explore Kopi Merbaoe">Kopi Merbaoe <svg class="ui-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 13 13 3M3 3h10v10" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></a></h2><p>Cashier, stock, and shift reporting. Sandbox preview.</p></div>
+          <div class="merbaoe-controls" role="group" aria-label="Explore Merbaoe sandbox screens" hidden>
+            <button type="button" data-merbaoe-view="cashier" aria-pressed="true" aria-controls="merbaoe-preview">Cashier</button>
+            <button type="button" data-merbaoe-view="reports" aria-pressed="false" aria-controls="merbaoe-preview">Reports</button>
+            <button type="button" data-merbaoe-view="shift" aria-pressed="false" aria-controls="merbaoe-preview">Shift</button>
+          </div>
+          <a class="text-link" href="project.html?id=merbaoe">View project details ↗</a>
+          <p class="merbaoe-status" role="status" data-merbaoe-status></p>
         </div>
-        <a class="showcase__visual" href="project.html?id=magicpin" data-showcase-image-link aria-label="View Magic Pin case study">
-          <img src="image/magicpin/DashboardGuest3.png" width="1600" height="1000" fetchpriority="high" alt="Magic Pin web platform and collector features" data-showcase-image>
-        </a>
-      </div>
-      <div class="showcase__controls">
-        <span>In practice</span>
-        <div role="group" aria-label="Choose featured project">
-          <button type="button" data-showcase-select="magicpin" aria-pressed="true">Magic Pin</button>
-          <button type="button" data-showcase-select="sicater" aria-pressed="false">SiCater</button>
-          <button type="button" data-showcase-select="ubmstorage" aria-pressed="false">UBM</button>
-        </div>
-        <span class="showcase__counter" data-showcase-counter aria-live="polite">01 / 03</span>
+        <figure class="merbaoe-preview" id="merbaoe-preview">
+          <a href="project.html?id=merbaoe" aria-label="Explore Kopi Merbaoe and its sandbox screens">
+            <img src="image/merbaoe/screencapture-merbaoe-vercel-app-cashier-2026-09-05-22_36_22 1.png" width="1920" height="1192" fetchpriority="high" alt="Kopi Merbaoe sandbox cashier with menu selection, basket and payment controls" data-merbaoe-image>
+          </a>
+          <figcaption data-merbaoe-caption>Cashier workspace. Sandbox account with demonstration data, not the operating account.</figcaption>
+        </figure>
       </div>
     </section>
 
     <section class="studio-selected page-shell section-pad" aria-labelledby="selected-title">
       <div class="section-heading">
-        <h2 id="selected-title">More client work.</h2>
+        <h2 id="selected-title">Selected work.</h2>
         <a class="text-link" href="work.html">All projects <svg class="ui-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></a>
       </div>
       <div class="editorial-projects" data-editorial-projects></div>
-      <noscript><p><a class="text-link" href="project.html?id=sicater">Explore SiCater</a> · <a class="text-link" href="project.html?id=magicpin">Explore Magic Pin</a></p></noscript>
+      <noscript><p><a class="text-link" href="project.html?id=magicpin">Explore Magic Pin</a> · <a class="text-link" href="project.html?id=flamboys">Explore Flamboys</a> · <a class="text-link" href="work.html">All projects</a></p></noscript>
     </section>
 
     <section class="studio-capabilities page-shell" aria-labelledby="capabilities-title">
       <div class="section-heading section-heading--wide">
-        <h2 id="capabilities-title">The right system.<br>For the actual problem.</h2>
+        <h2 id="capabilities-title">Built for<br>the work.</h2>
         <p>Different products. The same attention to how people will use them.</p>
       </div>
       <div class="capability-editorial">
         <article>
-          <h3><a href="services.html#systems">Operational software <svg class="ui-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 12 12 4M6 4h6v6" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></a></h3>
+          <h3><a href="services.html#systems">Operational software</a></h3>
           <p>Tools that connect field teams, daily decisions, and the office. Designed around the process—not the other way around.</p>
-          <div class="capability-evidence"><a href="project.html?id=sicater">SiCater</a><a href="project.html?id=flamboys">Flamboys</a><a href="project.html?id=digivass">DIGIVASS</a></div>
+          <div class="capability-evidence"><a href="project.html?id=merbaoe">Kopi Merbaoe</a><a href="project.html?id=flamboys">Flamboys</a><a href="project.html?id=digivass">DIGIVASS</a></div>
         </article>
         <article>
-          <h3><a href="services.html#engineering">Digital platforms <svg class="ui-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 12 12 4M6 4h6v6" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></a></h3>
+          <h3><a href="services.html#engineering">Digital platforms</a></h3>
           <p>Mobile products, institutional platforms, and company websites—with the systems needed to manage them.</p>
           <div class="capability-evidence"><a href="project.html?id=magicpin">Magic Pin</a><a href="project.html?id=cced">CCED Unila</a><a href="project.html?id=justspeak">JustSpeak</a></div>
         </article>
         <article>
-          <h3><a href="services.html#immersive">Interactive experiences <svg class="ui-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 12 12 4M6 4h6v6" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></a></h3>
+          <h3><a href="services.html#immersive">Interactive experiences</a></h3>
           <p>3D catalogues and spatial experiences that give people a different way to explore a product or a place.</p>
           <div class="capability-evidence"><a href="project.html?id=ubmstorage">UBM Storage</a><a href="work.html">Explore the archive</a></div>
         </article>
       </div>
     </section>
 
-    <section class="studio-lab" aria-labelledby="lab-title">
-      <div class="page-shell studio-lab__inner">
-        <div class="studio-lab__copy"><p class="studio-label">Independent experiments</p><h2 id="lab-title">Room to explore.</h2><p>Some questions need a prototype, not a brief. Our independent projects explore photography, browser-based worlds, and new ways to interact.</p><a class="text-link" href="work.html?filter=rd">Explore the experiments <svg class="ui-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></a></div>
-        <a class="studio-lab__visual" href="project.html?id=worldofbooth"><img src="image/worldOfBooth/Gameplay1.png" width="1600" height="900" loading="lazy" alt="Explore the 3D city in World of Booth"><span>World of Booth <svg class="ui-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 12 12 4M6 4h6v6" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></span></a>
+    <section class="studio-product" aria-labelledby="phera-title">
+      <div class="page-shell studio-product__inner">
+        <div><h2 id="phera-title">Phera</h2><p class="studio-product__status">Independent product · In development</p></div>
+        <div><p>A modular point-of-sale application we’re developing as our own product.</p><a class="text-link" href="contact.html">Ask about Phera ↗</a></div>
       </div>
     </section>
 
     <section class="studio-note page-shell">
-      <h2>Close to the problem.<br>Through to delivery.</h2>
+      <h2>Founder-led.<br>Direct delivery.</h2>
       <div><p>perpahmian.tech is a founder-led engineering studio. You work directly with the people shaping and building your product, with decisions kept clear along the way.</p><a class="text-link" href="about.html">Meet the studio <svg class="ui-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></a></div>
     </section>
   </main>

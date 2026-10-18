@@ -7,7 +7,7 @@ function checkPortfolioLayout() {
   const width = document.documentElement.clientWidth;
   if (document.documentElement.scrollWidth > width + 1) issues.push('Horizontal document overflow');
   const page = document.querySelector('[data-project-detail]') ? 'project' : document.body.dataset.page;
-  const features = { home: '.motion-story', work: '.archive-ribbon', services: '.delivery-diagram', about: '.brand-assembly--about', project: '.product-viewer', contact: '.contact-signal', privacy: '.privacy-index', '404': '.brand-assembly--missing' };
+  const features = { home: '[data-merbaoe-image]', work: '.filters', services: '.process-list', about: '.about-mark img', project: '.product-viewer', contact: '[data-contact-form]', privacy: '.legal-copy', '404': '.not-found' };
   if (!document.querySelector('.page-reading-rail')) issues.push('Shared choreography not mounted');
   if (!document.querySelector('script[src^="motion-intent.js"]')) issues.push('Proximity layer not loaded');
   if (width < 960) {

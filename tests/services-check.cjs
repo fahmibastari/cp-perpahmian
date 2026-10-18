@@ -18,6 +18,7 @@ for (const phrase of ['revision allowances are agreed', 'Ownership, source-code 
 }
 assert.ok(html.includes('href="contact.html">Discuss your project'));
 assert.ok(html.includes('services.css?v='));
-assert.ok(read('experience.js').includes('const stepRects = steps.map(step => step.getBoundingClientRect())'));
+assert.doesNotMatch(read('experience.js'), /stage\.append\(graph, list\)/, 'Process must not reserve a column for the retired diagram');
+assert.equal((html.match(/<li><span>[A-D]<\/span><h3>/g) || []).length, 4, 'Keep all four process steps in readable source markup');
 assert.doesNotMatch(html, /unlimited revisions|24\/7|guaranteed turnaround/i);
 console.log('PASS: 4 engagement outputs, 4 process checkpoints, 6 native FAQs, valid anchors and scoped commercial terms.');

@@ -5,4 +5,5 @@ hallmark-main
 .vercel
 
 skills
-.codex
+.codex/skills/
+.taste-skill/

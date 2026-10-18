@@ -95,7 +95,7 @@
       row.dataset.motionNumber = `0${i+1}`;
       watch(row, ({ arrive, reduce }) => {
         row.style.setProperty('--row-reveal', arrive);
-        row.querySelector('h3').style.transform = reduce ? 'none' : `translateX(${(1-arrive)*-28}px)`;
+        row.querySelector('h3').style.transform = reduce ? 'none' : `translateY(${(1-arrive)*16}px)`;
       });
     });
   }
@@ -138,35 +138,8 @@
   }
 
   if (page === 'services') {
-    const process = document.querySelector('.process');
-    const list = process?.querySelector('.process-list');
-    if (list) {
-      const stage = document.createElement('div');
-      stage.className = 'delivery-stage';
-      const graph = document.createElement('div');
-      graph.className = 'delivery-diagram';
-      graph.setAttribute('aria-hidden', 'true');
-      graph.innerHTML = `<p class="studio-label">A connected process</p><svg viewBox="0 0 480 400" fill="none"><path class="delivery-diagram__base" d="M80 70H365V180H110V300H365"/><path class="delivery-diagram__line" pathLength="1" d="M80 70H365V180H110V300H365"/>${[[80,70],[365,70],[110,180],[365,300]].map(([x,y],i)=>`<g data-process-node="${i}"><rect x="${x-21}" y="${y-21}" width="42" height="42" rx="2"/><text x="${x}" y="${y+5}" text-anchor="middle">0${i+1}</text></g>`).join('')}<text x="80" y="122">FRAME</text><text x="340" y="122">SHAPE</text><text x="110" y="233">BUILD</text><text x="340" y="356">RUN</text></svg><p class="delivery-diagram__current">01 / Frame</p>`;
-      list.before(stage);
-      stage.append(graph, list);
-      const steps = [...list.children];
-      const nodes = [...graph.querySelectorAll('[data-process-node]')];
-      const line = graph.querySelector('.delivery-diagram__line');
-      watch(stage, ({ height, reduce }) => {
-        // Follow actual step positions: copy length and the stacked mobile
-        // diagram make equal quarters of the whole stage inaccurate.
-        const stepRects = steps.map(step => step.getBoundingClientRect());
-        const readingLine = height * .6;
-        const index = stepRects.reduce((active, rect, i) => rect.top <= readingLine ? i : active, 0);
-        const current = stepRects[index];
-        const progress = (index + clamp((readingLine - current.top) / Math.max(1, current.height))) / steps.length;
-        line.style.strokeDashoffset = String(reduce ? 0 : 1-progress);
-        nodes.forEach((node,i) => node.classList.toggle('is-connected', i <= index));
-        steps.forEach((step,i) => step.classList.toggle('is-current-step', i === index));
-        graph.querySelector('.delivery-diagram__current').textContent = `0${index+1} / ${steps[index].querySelector('h3').textContent}`;
-      });
-      steps.forEach((step,i) => {step.dataset.stepNumber = `0${i+1}`;});
-    }
+    // The process is an ordinary readable list. Do not wrap it in the retired
+    // two-column diagram: that wrapper reserves space for a hidden illustration.
     document.querySelectorAll('.service-detail__row').forEach((row,i) => {
       row.dataset.motionNumber = `0${i+1}`;
       watch(row, ({ arrive, reduce }) => {
@@ -178,36 +151,19 @@
   }
 
   if (page === 'about') {
-    const mark = document.querySelector('.about-mark');
-    if (mark) { mark.innerHTML = ''; brandAssembly(mark, 'about'); }
+    // Keep the supplied logo in the authored markup, including the no-JS path.
     const lead = document.querySelector('.about-story__lead');
     if (lead) watch(document.querySelector('.about-story'), ({ through, reduce }) => lead.style.setProperty('--reading-fill', `${reduce ? 100 : clamp(through*2.6)*100}%`));
     document.querySelectorAll('.principle-list article').forEach((article,i) => {
       article.dataset.motionNumber = `0${i+1}`;
       watch(article, ({ arrive, reduce }) => {
         article.style.setProperty('--row-reveal', arrive);
-        article.style.transform = reduce ? 'none' : `translateX(${(1-arrive)*32}px)`;
+        article.style.transform = reduce ? 'none' : `translateY(${(1-arrive)*16}px)`;
       });
     });
   }
 
   if (page === 'project') {
-    const narrative = document.querySelector('.case-narrative');
-    const intro = document.querySelector('.case-story__intro');
-    if (narrative && intro) {
-      const marker = document.createElement('div');
-      marker.className = 'case-chapter-marker';
-      marker.setAttribute('aria-hidden', 'true');
-      marker.innerHTML = '<span>01</span><div><i></i><i></i><i></i><i></i></div><p>Context</p>';
-      intro.append(marker);
-      const articles = [...narrative.children];
-      watch(narrative, ({ through, reduce }) => {
-        const index = Math.min(3, Math.floor(clamp(through*1.25)*4));
-        marker.querySelector('span').textContent = `0${index+1}`;
-        marker.querySelector('p').textContent = articles[index].querySelector('h3').textContent;
-        marker.querySelectorAll('i').forEach((bar,i)=>bar.classList.toggle('is-read', i<=index));
-      });
-    }
     const gallery = document.querySelector('.project-gallery');
     if (gallery) {
       const galleryTitle = document.createElement('div');
@@ -285,8 +241,8 @@
       const source = links[index].querySelector('img');
       image.src = source.src;
       image.alt = source.alt;
-      dialog.querySelector('[data-viewer-caption]').textContent = `${String(index + 1).padStart(2, '0')} / ${source.alt}`;
-      dialog.querySelector('[data-viewer-count]').textContent = `${String(index+1).padStart(2,'0')} / ${String(links.length).padStart(2,'0')}`;
+      dialog.querySelector('[data-viewer-caption]').textContent = source.alt;
+      dialog.querySelector('[data-viewer-count]').textContent = `${index + 1} of ${links.length}`;
       if (!reduced.matches) image.animate([{opacity:.25,transform:'translateY(20px) scale(.97)'},{opacity:1,transform:'none'}],{duration:400,easing:'cubic-bezier(.16,1,.3,1)'});
     }
     links.forEach((link,i)=>{

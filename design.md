@@ -25,6 +25,44 @@ Preserve the logo and exact user-supplied white, #111111, and #8BCF6A brand colo
 - Media: fixed-ratio artboards, non-overlapping desktop/mobile screenshot columns,
   common inset geometry and captions outside the artwork. Never simulate device chrome.
 
+## Current curation and spacing — 2026-10-18
+
+This update supersedes the older homepage chapter-story and inset-media descriptions
+above and in the historical notes below. Keep the established direction, The well-kept
+board (seed 1952153374), logo, Manrope, green/ink/white palette and vanilla stack.
+
+- Lead with Kopi Merbaoe. The owner explicitly confirmed these are sandbox screenshots,
+  not the operating account. Caption the first view and the gallery accordingly.
+- The working interaction is a manual Cashier / Reports / Shift screenshot selector,
+  not a live POS demo. Keep the current image when loading fails; latest selection wins.
+  With JavaScript disabled, preserve the cashier image and project links.
+- Follow with Magic Pin, Flamboys, 2Watuju, JustSpeak, DIGIVASS, and SpekHP.
+  Prioritize the map, roasting curve, architecture catalogue and public product screens.
+  JustSpeak's caption must retain back-end attribution. SiCater and UBM remain in Work.
+- Phera is an independent modular POS in development, not a completed client delivery.
+  Do not invent a screenshot, stack, release date, customers or outcomes for it.
+- Use 2:1 contained artwork on selected-project cards, without nested padding for single
+  screenshots. Use the cashier's native 1920:1192 ratio in the Merbaoe lead and case hero.
+- Shared section anchors and restrained internal gaps are more important than additional
+  decorative effects. Service headings no longer span an unintended extra grid row;
+  case-study paragraphs stay close to their headings. About principles move vertically,
+  without changing their horizontal text alignment.
+- Merbaoe is a screen walkthrough, not an outcome case study: role, timeline, stack and
+  business results are unconfirmed and omitted. 2026 identifies the screenshot captures,
+  not a confirmed creation date. Existing factual case-study records remain intact.
+- See merbaoe-curation-report.md for visual critique, test evidence and limitations.
+
+### Desktop proportion correction
+
+- Shared desktop content is capped at 90rem. The Merbaoe opening uses a 4:7
+  text/preview composition, with a native-ratio image capped at 560px high.
+  It stacks below 720px; screenshot controls remain manual and keyboard accessible.
+- Services previews use the available artwork area; distinct service rows have a
+  3rem gap. Light interfaces sit on a pale field instead of black letterboxing.
+- About principles have content-driven heights; the archive contains 19 projects.
+- Contact fields use 1.5rem between groups, with helper text kept inside each group.
+- See desktop-proportion-report.md for exact coverage, screenshots and open findings.
+
 ## Proximity choreography — October 2026
 
 `motion-intent.js` and `motion-intent.css` add one shared pointer layer to all eight

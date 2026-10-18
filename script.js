@@ -15,7 +15,7 @@ const SITE_LINKS = [
 function headerMarkup(currentPage) {
   const navLinks = SITE_LINKS.map(([id, label, href], index) => {
     const current = id === currentPage ? ' aria-current="page"' : "";
-    return `<a href="${href}"${current}><span>0${index + 1}</span>${label}</a>`;
+    return `<a href="${href}"${current}>${label}</a>`;
   }).join("");
 
   return `
@@ -49,7 +49,7 @@ function footerMarkup() {
   return `
     <footer class="site-footer">
       <div class="site-footer__inner">
-        <p class="site-footer__statement">Something worth<br>building? <span>Let’s talk.</span></p>
+        <h2 class="site-footer__statement">Worth building?<br>Let’s talk.</h2>
         <a class="text-link site-footer__action" href="contact.html">Start a conversation ${ICON_ARROW_RIGHT}</a>
         <div class="site-footer__meta">
           <span>© 2026 perpahmian.tech · Indonesia</span>
@@ -81,6 +81,7 @@ function setupMenu() {
   if (!toggle || !menu || !close) return;
 
   let lastFocus = null;
+  menu.inert = true;
 
   function focusableItems() {
     return [...menu.querySelectorAll('a[href], button:not([disabled])')];
@@ -90,6 +91,7 @@ function setupMenu() {
     lastFocus = document.activeElement;
     menu.classList.add("is-open");
     menu.setAttribute("aria-hidden", "false");
+    menu.inert = false;
     toggle.setAttribute("aria-expanded", "true");
     if (main) main.inert = true;
     if (footer) footer.inert = true;
@@ -99,6 +101,7 @@ function setupMenu() {
   function closeMenu() {
     menu.classList.remove("is-open");
     menu.setAttribute("aria-hidden", "true");
+    menu.inert = true;
     toggle.setAttribute("aria-expanded", "false");
     if (main) main.inert = false;
     if (footer) footer.inert = false;
@@ -160,8 +163,8 @@ function projectCard(project, featured = false) {
         </div>
         <div class="project-card__body">
           <div>
-            <p class="project-card__meta"><span>${project.kind}</span> · ${project.year}</p>
             <h3>${project.name}</h3>
+            <p class="project-card__meta"><span>${project.kind}</span> · ${project.year}</p>
           </div>
           <span class="project-card__arrow" aria-hidden="true">${ICON_ARROW_UP_RIGHT}</span>
           <p class="project-card__workstream">${project.workstream}</p>
@@ -181,7 +184,7 @@ function renderFeaturedProjects() {
       <figure>
         <img src="${project.cover}" width="1600" height="1200" ${index === 0 ? "" : "loading=\"lazy\""} alt="${project.name} product interface">
         <figcaption>
-          <span>${String(index + 1).padStart(2, "0")} / ${String(featured.length).padStart(2, "0")} · ${project.kind}</span>
+          <span>${index + 1} of ${featured.length} · ${project.kind}</span>
           <strong>${project.name}</strong>
           <small>${project.workstream}</small>
         </figcaption>
@@ -194,7 +197,7 @@ function renderFeaturedProjects() {
         <img src="${project.cover}" width="1600" height="1200" loading="lazy" alt="${project.name} product interface">
       </a>
       <div class="scroll-work__step-body">
-        <p class="scroll-work__meta">${String(index + 1).padStart(2, "0")} / ${String(featured.length).padStart(2, "0")} · ${project.kind}</p>
+        <p class="scroll-work__meta">${index + 1} of ${featured.length} · ${project.kind}</p>
         <h3>${project.name}</h3>
         <p>${project.summary}</p>
         <a class="text-link" href="project.html?id=${project.id}">View case study ${ICON_ARROW_RIGHT}</a>
@@ -348,7 +351,7 @@ function setupHeroShowcase() {
     image.alt = `${project.name} product interface`;
     title.textContent = project.name;
     meta.textContent = project.category;
-    count.textContent = `${String(index + 1).padStart(2, "0")} / ${String(showcase.length).padStart(2, "0")}`;
+    count.textContent = `${index + 1} of ${showcase.length}`;
   }
 
   function transitionToProject(index) {
@@ -414,20 +417,20 @@ function renderProjectGrid() {
   const status = document.querySelector("[data-filter-status]");
   if (!grid || typeof PROJECTS === "undefined") return;
 
-  const clientProjects = PROJECTS.filter((project) => project.kind === "Client work");
+  const clientProjects = PROJECTS.filter((project) => project.kind !== "Independent R&D");
   const researchProjects = PROJECTS.filter((project) => project.kind === "Independent R&D");
 
   grid.innerHTML = `
     <section class="work-group" data-work-group="client" aria-labelledby="client-work-title">
       <header class="work-group__heading">
-        <div><p>Commissioned products</p><h2 id="client-work-title">Client work</h2></div>
+        <div><h2 id="client-work-title">Selected projects</h2></div>
         <span data-group-count>${clientProjects.length} projects</span>
       </header>
       <div class="project-grid__inner">${clientProjects.map((project) => projectCard(project)).join("")}</div>
     </section>
     <section class="work-group" data-work-group="rd" aria-labelledby="research-title">
       <header class="work-group__heading">
-        <div><p>Self-initiated exploration</p><h2 id="research-title">Independent R&D</h2></div>
+        <div><h2 id="research-title">Independent R&amp;D</h2></div>
         <span data-group-count>${researchProjects.length} projects</span>
       </header>
       <div class="project-grid__inner">${researchProjects.map((project) => projectCard(project)).join("")}</div>
@@ -549,7 +552,7 @@ function renderProjectDetail() {
     description: project.summary,
     url: projectUrl,
     image: projectImage,
-    dateCreated: project.year,
+    ...(project.kind === 'Project showcase' ? {} : { dateCreated: project.year }),
     genre: project.category,
     creator: { "@type": "Organization", name: "perpahmian.tech", url: "https://cp-perpahmian.vercel.app/" }
   });
@@ -567,6 +570,7 @@ function renderProjectDetail() {
   });
   document.head.append(breadcrumbSchema);
   const projectIndex = PROJECTS.findIndex((item) => item.id === project.id);
+  target.dataset.project = project.id;
   const next = PROJECTS[(projectIndex + 1) % PROJECTS.length];
   const externalLink = project.url
     ? `<div class="case-public-links${project.publicLinks?.length ? ' case-public-links--stores' : ''}" role="group" aria-label="External project links">
@@ -579,7 +583,7 @@ function renderProjectDetail() {
     return `
     <figure id="project-screen-${index + 1}" tabindex="-1">
       <a class="project-gallery__media" href="${image}" target="_blank" rel="noopener" aria-label="Open ${project.name}: ${title} (new tab)"><img src="${image}" width="1600" height="1200" loading="lazy" alt="${project.name} — ${title}"></a>
-      <figcaption><span class="gallery-view-number">${String(index + 1).padStart(2, "0")}</span> ${title}</figcaption>
+      <figcaption>${title}</figcaption>
     </figure>`;
   }).join("");
 
@@ -587,16 +591,15 @@ function renderProjectDetail() {
   const implementation = study ? `
     <section class="case-implementation page-shell" aria-labelledby="implementation-title">
       <div class="case-implementation__heading">
-        <p class="eyebrow">Inside the build</p>
         <h2 id="implementation-title">The work, in detail.</h2>
+        <p class="case-context">Inside the build</p>
         <p>Three implementation details, with the corresponding product screens.</p>
       </div>
       <ol class="case-decisions">
         ${study.decisions.map((decision, index) => `
           <li>
-            <span class="case-decision-number" aria-hidden="true">${String(index + 1).padStart(2, '0')}</span>
             <div><h3>${decision.title}</h3><p>${decision.body}</p>
-              <a class="text-link" href="#project-screen-${decision.screen}" aria-label="View screen ${decision.screen}: ${project.gallery[decision.screen - 1].title}">View screen ${String(decision.screen).padStart(2, '0')} ${ICON_ARROW_RIGHT}</a>
+              <a class="text-link" href="#project-screen-${decision.screen}" aria-label="View screen ${decision.screen}: ${project.gallery[decision.screen - 1].title}">View screen ${decision.screen} ${ICON_ARROW_RIGHT}</a>
             </div>
           </li>`).join('')}
       </ol>
@@ -605,11 +608,12 @@ function renderProjectDetail() {
   target.innerHTML = `
     <section class="case-hero page-shell">
       <div class="case-hero__copy reveal" style="--i: 0">
-        <a class="case-back" href="work.html">${ICON_ARROW_LEFT} Back to work</a>
-        <p class="project-meta">${project.kind} · ${project.workstream}</p>
         <h1>${project.name}</h1>
         <p class="case-hero__summary">${project.summary}</p>
+        ${project.mediaNote ? `<p class="case-link-note">${project.mediaNote}</p>` : ""}
+        <p class="project-meta">${project.kind} · ${project.workstream}</p>
         ${externalLink}
+        <a class="case-back" href="work.html">${ICON_ARROW_LEFT} Back to work</a>
       </div>
       <figure class="case-hero__media reveal" style="--i: 1">
         <img src="${project.cover}" width="1600" height="1200" fetchpriority="high" alt="${project.name} project cover">
@@ -617,31 +621,31 @@ function renderProjectDetail() {
     </section>
     <section class="case-facts page-shell" aria-label="Project facts">
       <dl>
-        <div><dt>Role</dt><dd>${project.role}</dd></div>
-        <div><dt>Engagement</dt><dd>${project.kind}</dd></div>
-        <div><dt>Timeline</dt><dd>${project.timeline}</dd></div>
+        ${project.role ? `<div><dt>Role</dt><dd>${project.role}</dd></div>` : ""}
+        <div><dt>${project.kind === 'Project showcase' ? 'Presentation' : 'Engagement'}</dt><dd>${project.kind}</dd></div>
+        ${project.timeline ? `<div><dt>Timeline</dt><dd>${project.timeline}</dd></div>` : ""}
         <div><dt>Status</dt><dd>${project.status}</dd></div>
         <div><dt>Product area</dt><dd>${project.category}</dd></div>
-        <div><dt>Year</dt><dd>${project.year}</dd></div>
+        <div><dt>${project.kind === 'Project showcase' ? 'Screens captured' : 'Year'}</dt><dd>${project.year}</dd></div>
       </dl>
     </section>
     <section class="case-story page-shell">
       <div class="case-story__intro">
-        <p class="eyebrow">Case study</p>
-        <h2>${study ? study.title : 'From operating context to working product.'}</h2>
+        <h2>${project.narrativeHeading || (study ? study.title : 'From operating context to working product.')}</h2>
+        <p class="case-context">${project.kind === "Project showcase" ? "Screen walkthrough" : "Case study"}</p>
       </div>
       <div class="case-story__body case-narrative">
-        <article><span>01</span><h3>Context</h3><p>${project.context || project.summary}</p></article>
-        <article><span>02</span><h3>Challenge</h3><p>${project.challenge || project.summary}</p></article>
-        <article><span>03</span><h3>${study ? 'Our contribution' : 'Response'}</h3><p>${study ? study.contribution : project.response || project.description}</p></article>
-        <article><span>04</span><h3>${project.kind === 'Independent R&D' ? 'What the experiment demonstrates' : 'What was built'}</h3><p>${project.outcome || project.description}</p></article>
+        <article><h3>Context</h3><p>${project.context || project.summary}</p></article>
+        <article><h3>${project.challengeHeading || 'Challenge'}</h3><p>${project.challenge || project.summary}</p></article>
+        <article><h3>${project.responseHeading || (study ? 'Our contribution' : 'Response')}</h3><p>${study ? study.contribution : project.response || project.description}</p></article>
+        <article><h3>${project.outcomeHeading || (project.kind === 'Independent R&D' ? 'What the experiment demonstrates' : 'What was built')}</h3><p>${project.outcome || project.description}</p></article>
       </div>
     </section>
     ${implementation}
     <section class="case-evidence page-shell" aria-label="Delivery context and technology">
       <div><span>Delivery context</span><strong>${project.proof}</strong>${study ? `<p class="case-delivery-note">${study.delivery}</p>` : ''}</div>
       <div><span>Product scope</span><strong>${project.workstream}</strong></div>
-      <div><span>Technology</span><ul class="tech-list" aria-label="Technology used">${project.tech.map((tech) => `<li>${tech}</li>`).join("")}</ul></div>
+      ${project.tech.length ? `<div><span>Technology</span><ul class="tech-list" aria-label="Technology used">${project.tech.map((tech) => `<li>${tech}</li>`).join("")}</ul></div>` : ""}
     </section>
     <section class="project-gallery page-shell" aria-label="Project gallery">${gallery}</section>
     <section class="next-project page-shell">
@@ -675,7 +679,7 @@ function setupServiceScroll() {
         step.style.setProperty("--service-y", "0px");
       });
       if (progress) progress.style.transform = "scaleX(1)";
-      if (count) count.textContent = `${String(steps.length).padStart(2, "0")} / ${String(steps.length).padStart(2, "0")}`;
+      if (count) count.textContent = "Current capability";
       activeIndex = -1;
       return;
     }
@@ -700,7 +704,7 @@ function setupServiceScroll() {
     if (nearest !== activeIndex) {
       activeIndex = nearest;
       steps.forEach((step, index) => step.classList.toggle("is-active", index === nearest));
-      if (count) count.textContent = `${String(nearest + 1).padStart(2, "0")} / ${String(steps.length).padStart(2, "0")}`;
+      if (count) count.textContent = "Current capability";
     }
 
     steps.forEach((step, index) => {

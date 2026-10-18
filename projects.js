@@ -1,5 +1,24 @@
 const PROJECTS = [
   {
+    id: "merbaoe",
+    name: "Kopi Merbaoe",
+    category: "Point of sale & operations",
+    filters: ["web", "enterprise"],
+    year: "2026",
+    type: "Project showcase",
+    summary: "A coffee-shop workspace connecting the cashier, menu recipes, stock records, and shift reporting.",
+    description: "The documented screens show menu selection, payment controls, ingredient records, recipe costs, profit reporting, inventory reconciliation, and cash-shift review.",
+    cover: "image/merbaoe/screencapture-merbaoe-vercel-app-cashier-2026-09-05-22_36_22 1.png",
+    tech: [],
+    images: [
+      "image/merbaoe/screencapture-merbaoe-vercel-app-cashier-2026-09-05-22_36_22 1.png",
+      "image/merbaoe/screencapture-merbaoe-vercel-app-admin-products-2026-09-05-22_20_41 1.png",
+      "image/merbaoe/screencapture-merbaoe-vercel-app-admin-reports-inventory-2026-09-05-22_32_36 1.png",
+      "image/merbaoe/screencapture-merbaoe-vercel-app-admin-reports-profit-2026-09-05-22_27_41 1.png",
+      "image/merbaoe/screencapture-merbaoe-vercel-app-cashier-shift-2026-09-05-22_40_11 1.png"
+    ]
+  },
+  {
     id: "sicater",
     name: "SiCater Ultimate",
     category: "Enterprise Systems",
@@ -296,6 +315,21 @@ const PROJECTS = [
 ];
 
 const PROJECT_DETAILS = {
+  merbaoe: {
+    kind: "Project showcase",
+    workstream: "Operational systems",
+    context: "A point-of-sale and reporting workspace for Kopi Merbaoe, shown using a sandbox account rather than the operating account.",
+    challenge: "The screens cover two connected perspectives: handling an order at the counter and reviewing the stock, costs, and cash records behind it.",
+    response: "The sandbox documents cashier controls, menu recipes and HPP, ingredient movements, reporting, and shift reconciliation.",
+    outcome: "A documented interface walkthrough. Figures, names, and QA entries in these captures are demonstration data, not evidence of business results.",
+    proof: "Sandbox screenshots supplied by the project owner.",
+    status: "Sandbox preview",
+    narrativeHeading: "Inside the workspace.",
+    challengeHeading: "Connected perspectives",
+    responseHeading: "Documented workflows",
+    outcomeHeading: "About these screens",
+    mediaNote: "Sandbox account. Demonstration data, including QA entries; not the operating account."
+  },
   sicater: {
     kind: "Client work",
     workstream: "Operational systems",
@@ -567,6 +601,7 @@ const PROJECT_CASE_STUDIES = {
 // Explicit public-facing captions. Keep these aligned with each project's images.
 // Numbered source files use neutral labels until their individual screens are curated.
 const PROJECT_GALLERY_TITLES = {
+  merbaoe: ["Sandbox: cashier and payment controls", "Sandbox: menu recipes and costs", "Sandbox: inventory reconciliation", "Sandbox: profit reporting", "Sandbox: cash-shift reconciliation"],
   sicater: ["The field-to-office ecosystem", "An overview of utility operations", "Revenue reporting", "Meter locations and field coverage", "Operational statistics on mobile", "NFC meter verification"],
   magicpin: ["The collector platform on the web", "Park selection and map exploration", "Park maps on mobile", "A pin's collection details"],
   worldofbooth: ["Entering the virtual city", "Exploring the city on foot", "Driving between locations", "The photobooth countdown", "Reviewing a photostrip", "The photo gallery"],
@@ -603,12 +638,12 @@ PROJECTS.forEach((project) => {
   }));
   project.filters = [...new Set([
     ...project.filters,
-    project.kind === "Client work" ? "client" : "rd",
+    project.kind === "Client work" ? "client" : project.kind === "Independent R&D" ? "rd" : null,
     WORKSTREAM_FILTERS[project.workstream]
   ].filter(Boolean))];
 });
 
-const FEATURED_PROJECT_IDS = ["sicater", "magicpin", "digivass", "flamboys", "cced", "ubmstorage"];
+const FEATURED_PROJECT_IDS = ["merbaoe", "magicpin", "flamboys", "2watuju", "justspeak", "spekhp"];
 
 function getProject(id) {
   return PROJECTS.find((project) => project.id === id);

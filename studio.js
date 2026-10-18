@@ -5,10 +5,13 @@
   const ease = styles.getPropertyValue("--ease-out").trim();
   const duration = parseFloat(styles.getPropertyValue("--dur-editorial")) || 850;
   const media = {
+    merbaoe: { primary: "image/merbaoe/screencapture-merbaoe-vercel-app-cashier-2026-09-05-22_36_22 1.png", layout: "single", label: "Sandbox preview", tone: "light" },
     sicater: { primary: "image/sicater/Web-Dashboard.png", secondary: "image/sicater/Mobile-DashboardStats.jpg", layout: "paired", label: "Field + office", tone: "light" },
-    magicpin: { primary: "image/magicpin/DashboardGuest3.png", secondary: "image/magicpin/Mobile - FullMapTiles.png", layout: "paired", label: "Production web + mobile", tone: "dark" },
-    flamboys: { primary: "image/flamboys/Admin - DashboardAnalytics.png", layout: "single", label: "Operations platform", tone: "light" },
+    magicpin: { primary: "image/magicpin/Web - Map Tiles - List Map.png", layout: "single", label: "Production web + mobile", tone: "dark" },
+    flamboys: { primary: "image/flamboys/Admin - LogRORDetails.png", layout: "single", label: "Operations platform", tone: "light" },
     ubmstorage: { primary: "image/ubmstorage/PSP - Product Catalog.png", secondary: "image/ubmstorage/PSP - Menu Custom UI.png", layout: "immersive", label: "Interactive 3D", tone: "dark" },
+    spekhp: { primary: "image/spekhp/Main.png", layout: "single", label: "Device discovery", tone: "light" },
+    digivass: { primary: "image/digivass/AdminDashboard.png", layout: "single", label: "Field operations", tone: "light" },
     '2watuju': { primary: "image/2watuju/DashboardCatalog.png", layout: "single", label: "Architecture + 360° exploration", tone: "light" },
     cced: { primary: "image/cced/LandingPage.png", layout: "single", label: "University career platform", tone: "dark" },
     justspeak: { primary: "image/justspeak/Dashboard.png", layout: "single", label: "Learning + assessment", tone: "light" }
@@ -90,7 +93,7 @@
       visual.innerHTML = art(slide.id, slide.name, "", true);
       visual.querySelector(".project-art").classList.add("is-revealed");
       buttons.forEach(item => item.setAttribute("aria-pressed", String(item === button)));
-      document.querySelector("[data-showcase-counter]").textContent = `0${slides.indexOf(slide) + 1} / 03`;
+      document.querySelector("[data-showcase-counter]").textContent = `${slides.indexOf(slide) + 1} of ${slides.length}`;
       animateArtwork(visual);
       if (!reduce.matches) {
         stage.querySelector(".showcase__copy").getAnimations().forEach(animation => animation.cancel());
@@ -100,12 +103,20 @@
   }
 
   const selected = document.querySelector("[data-editorial-projects]");
+  const selectedCaptions = {
+    magicpin: "Collector community · Web & mobile",
+    flamboys: "Roasting workflows · Internal operations",
+    "2watuju": "Architecture catalogue · 360° exploration",
+    justspeak: "Learning platform · Back-end development",
+    digivass: "Survey & validation · Field operations",
+    spekhp: "Smartphone discovery · Custom CMS"
+  };
   if (selected && typeof getProject === "function") {
-    selected.innerHTML = ["flamboys", "2watuju", "cced", "justspeak"].map(id => {
+    selected.innerHTML = ["magicpin", "flamboys", "2watuju", "justspeak", "digivass", "spekhp"].map(id => {
       const project = getProject(id);
       return `<article class="editorial-card"><a href="project.html?id=${id}">
         <div class="editorial-card__media">${art(id, project.name, project.cover)}</div>
-        <div class="editorial-card__caption"><div><h3>${project.name}</h3><p>${project.workstream}</p></div>
+        <div class="editorial-card__caption"><div><h3>${id === "flamboys" ? "Flamboys Roaster" : project.name}</h3><p>${selectedCaptions[id] || project.workstream}</p></div>
         <span class="project-open" aria-hidden="true">${ICON_ARROW_UP_RIGHT}</span></div></a></article>`;
     }).join("");
   }
